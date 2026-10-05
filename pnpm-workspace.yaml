@@ -14,6 +14,8 @@ allowBuilds:
 catalogs:
   dev:
     '@antfu/eslint-config': ^9.5.1
+    '@commitlint/cli': ^21.2.3
+    '@commitlint/config-conventional': ^21.2.3
     '@nuxt/test-utils': ^4.3.3
     '@vue/test-utils': ^2.5.1
     eslint: ^10.12.0

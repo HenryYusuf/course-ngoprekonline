@@ -22,6 +22,8 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
+    "@commitlint/cli": "catalog:dev",
+    "@commitlint/config-conventional": "catalog:dev",
     "@nuxt/test-utils": "catalog:dev",
     "@unocss/eslint-plugin": "catalog:frontend",
     "@unocss/nuxt": "catalog:frontend",
@@ -39,7 +41,8 @@
     "vue-tsc": "catalog:dev"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm run ci && pnpx nano-staged"
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm run ci && pnpx nano-staged",
+    "commit-msg": "pnpm exec commitlint --edit $1"
   },
   "nano-staged": {
     "*": "eslint --fix --no-warn-ignored"
