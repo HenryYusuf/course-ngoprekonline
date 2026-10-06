@@ -29,3 +29,8 @@ logs
 .githooks
 coverage
 skills/npm-*
+
+# skills-npm symlinks (installed by `pnpm prepare`; pinned in skills-npm-lock.json)
+.agents/skills/*
+.claude/skills/*
+!/**/.gitkeep

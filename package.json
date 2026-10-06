@@ -18,7 +18,11 @@
     "prepare": "git config core.hooksPath .githooks && simple-git-hooks && skills-npm"
   },
   "dependencies": {
+    "@nuxt/content": "catalog:prod",
+    "@nuxtjs/sitemap": "catalog:prod",
+    "better-sqlite3": "catalog:prod",
     "nuxt": "catalog:prod",
+    "nuxt-studio": "catalog:prod",
     "vue": "catalog:frontend"
   },
   "devDependencies": {
@@ -28,6 +32,7 @@
     "@nuxt/test-utils": "catalog:dev",
     "@unocss/eslint-plugin": "catalog:frontend",
     "@unocss/nuxt": "catalog:frontend",
+    "@unocss/preset-typography": "catalog:frontend",
     "@vue/test-utils": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-plugin-slop": "catalog:dev",
@@ -35,8 +40,10 @@
     "happy-dom": "catalog:dev",
     "knip": "catalog:dev",
     "nano-staged": "catalog:dev",
+    "nitropack": "catalog:dev",
     "simple-git-hooks": "catalog:dev",
     "skills-npm": "catalog:dev",
+    "typescript": "catalog:dev",
     "unocss": "catalog:frontend",
     "vitest": "catalog:dev",
     "vue-tsc": "catalog:dev"
