@@ -49,11 +49,13 @@ export default defineNuxtConfig({
 
   studio: {
     // Required for production builds: Studio's CI-based auto-detection cannot
-    // run outside CI (e.g. VPS Docker), so the repository is set explicitly.
+    // run outside CI (e.g. VPS Docker), so the repository and branch are set
+    // explicitly.
     repository: {
       provider: 'github',
       owner: 'HenryYusuf',
       repo: 'course-ngoprekonline',
+      branch: 'main',
     },
     i18n: {
       defaultLocale: 'id',

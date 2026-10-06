@@ -70,7 +70,7 @@ A post is visible on the public site only when it is **not** a draft and its `pu
 - **Dev:** run `pnpm dev`, open the app, click the floating Studio button (bottom left). Changes sync to your local files in real time; commit them with your normal git workflow.
 - **Production:** Studio publishes changes straight to git. It requires:
   1. An SSR deployment (`nuxt build`),
-  2. A GitHub OAuth app, configured via `STUDIO_GITHUB_CLIENT_ID` and `STUDIO_GITHUB_CLIENT_SECRET`,
+  2. A GitHub OAuth app, configured via `STUDIO_GITHUB_CLIENT_ID` and `STUDIO_GITHUB_CLIENT_SECRET` (run [`scripts/setup-studio.sh`](scripts/setup-studio.sh) to create the app and write both variables to `.env`),
   3. On Vercel/Netlify/GitHub Actions the repository details are auto-detected; elsewhere set them under the `studio.repository` option in `nuxt.config.ts`.
 
   Studio is reachable at `/_studio` (default route).
