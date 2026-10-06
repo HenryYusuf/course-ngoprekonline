@@ -4,15 +4,15 @@ import { useHead, useRuntimeConfig, useSeoMeta } from '#imports'
 import PostCard from '~/components/PostCard.vue'
 import { usePublishedPosts } from '~/composables/usePublishedPosts'
 
-const { public: { siteUrl } } = useRuntimeConfig()
+const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
 const posts = await usePublishedPosts()
 
 useSeoMeta({
   title: 'Blog',
-  description: 'Kumpulan artikel terbaru dari Ngoprek Online.',
+  description: `Kumpulan artikel terbaru dari ${siteName}.`,
   ogTitle: 'Blog',
-  ogDescription: 'Kumpulan artikel terbaru dari Ngoprek Online.',
+  ogDescription: `Kumpulan artikel terbaru dari ${siteName}.`,
   ogLocale: 'id_ID',
 })
 useHead({

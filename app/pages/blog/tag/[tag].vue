@@ -9,16 +9,16 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { public: { siteUrl } } = useRuntimeConfig()
+const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
 const tag = String(route.params.tag)
 const posts = (await usePublishedPosts()).filter(post => post.tags?.includes(tag))
 
 useSeoMeta({
   title: `Tag: ${tag}`,
-  description: `Artikel Ngoprek Online dengan tag ${tag}.`,
+  description: `Artikel ${siteName} dengan tag ${tag}.`,
   ogTitle: `Tag: ${tag}`,
-  ogDescription: `Artikel Ngoprek Online dengan tag ${tag}.`,
+  ogDescription: `Artikel ${siteName} dengan tag ${tag}.`,
   ogLocale: 'id_ID',
 })
 useHead({
