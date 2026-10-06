@@ -8,7 +8,9 @@ trustPolicyExclude:
 shellEmulator: true
 
 allowBuilds:
+  better-sqlite3: true
   esbuild: true
+  sharp: true
   simple-git-hooks: true
 
 catalogs:
@@ -24,14 +26,21 @@ catalogs:
     happy-dom: ^20.0.11
     knip: ^6.39.0
     nano-staged: ^1.0.2
+    nitropack: ^2.13.4
     simple-git-hooks: ^2.14.0
     skills-npm: ^4.0.0
+    typescript: ^5.9.3
     vitest: ^5.0.3
     vue-tsc: ^3.3.12
   frontend:
     '@unocss/eslint-plugin': ^66.10.5
     '@unocss/nuxt': ^66.10.5
+    '@unocss/preset-typography': ^66.10.5
     unocss: ^66.10.5
     vue: ^3.5.43
   prod:
+    '@nuxt/content': ^3.16.1
+    '@nuxtjs/sitemap': ^8.6.1
+    better-sqlite3: ^12.4.1
     nuxt: ^4.5.2
+    nuxt-studio: ^1.7.0
