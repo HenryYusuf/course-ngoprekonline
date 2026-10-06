@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { createError, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#imports'
 
+import { findCategory } from '#shared/utils/categories'
+
+import { useCategories } from '~/composables/useCategories'
 import { usePublishedPost } from '~/composables/usePublishedPosts'
 import { formatDate } from '~/utils/formatDate'
 
@@ -14,6 +17,7 @@ if (!post) {
 }
 
 const publishedTime = new Date(post.publishedAt).toISOString()
+const category = findCategory(await useCategories(), post.category)
 
 useSeoMeta({
   title: post.title,
@@ -38,7 +42,16 @@ useHead({
         class="inline-block rounded bg-yellow-100 px-2 py-0.5 text-sm text-yellow-800 font-medium"
       >Draf</span>
       <h1>{{ post.title }}</h1>
-      <time :datetime="publishedTime" class="text-gray-500">{{ formatDate(post.publishedAt) }}</time>
+      <div class="mt-1 flex items-center gap-3 text-gray-500">
+        <NuxtLink
+          v-if="category"
+          :to="`/blog/category/${post.category}`"
+          class="text-gray-700 font-medium hover:text-blue-600"
+        >
+          {{ category.label }}
+        </NuxtLink>
+        <time :datetime="publishedTime">{{ formatDate(post.publishedAt) }}</time>
+      </div>
       <img v-if="post.image" :src="post.image" :alt="post.title">
       <ContentRenderer :value="post" />
     </article>

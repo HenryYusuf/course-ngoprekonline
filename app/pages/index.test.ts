@@ -3,6 +3,13 @@ import { describe, expect, it, vi } from 'vitest'
 
 import HomePage from './index.vue'
 
+vi.mock('~/composables/useCategories', () => ({
+  useCategories: vi.fn(async () => [
+    { slug: 'tutorial', label: 'Tutorial', description: 'Panduan langkah demi langkah.' },
+    { slug: 'umum', label: 'Umum', description: 'Catatan ringan seputar situs.' },
+  ]),
+}))
+
 vi.mock('~/composables/usePublishedPosts', () => ({
   usePublishedPosts: vi.fn(async () => [
     {
@@ -10,6 +17,7 @@ vi.mock('~/composables/usePublishedPosts', () => ({
       title: 'Post Terbaru',
       description: 'Paling baru.',
       publishedAt: new Date('2026-10-05'),
+      category: 'umum',
       tags: ['umum'],
     },
     {
@@ -47,5 +55,13 @@ describe('homepage', () => {
     // Only the 3 newest posts belong on the homepage
     expect(html).not.toContain('Post Keempat')
     expect(wrapper.find('a[href="/blog"]').exists()).toBe(true)
+  })
+
+  it('labels recent post cards with their category archive link', async () => {
+    const wrapper = await mountSuspended(HomePage)
+
+    const link = wrapper.find('a[href="/blog/category/umum"]')
+    expect(link.exists()).toBe(true)
+    expect(link.text()).toBe('Umum')
   })
 })

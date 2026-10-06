@@ -16,11 +16,17 @@ vi.mock('nitropack/runtime', () => ({
   })),
 }))
 
+const curatedCategories = [
+  { slug: 'tutorial', label: 'Tutorial', description: 'Panduan langkah demi langkah.' },
+  { slug: 'umum', label: 'Umum', description: 'Catatan ringan seputar situs.' },
+]
+
 const publishedPost = {
   path: '/blog/artikel-terbit',
   title: 'Artikel Terbit',
   description: 'Sudah dipublikasikan.',
   publishedAt: new Date('2026-09-20T00:00:00.000Z'),
+  category: 'umum',
   tags: ['umum'],
 }
 
@@ -30,20 +36,24 @@ const draftPost = {
   description: 'Belum dipublikasikan.',
   publishedAt: new Date('2026-10-01T00:00:00.000Z'),
   draft: true,
+  category: 'umum',
   tags: [],
 }
 
-function mockFeedQuery(result: unknown[]) {
-  const query = {
+function mockQueries(blogResult: unknown[], categoryResult: unknown[] = curatedCategories) {
+  const blogQuery = {
     order: vi.fn().mockReturnThis(),
-    all: vi.fn().mockResolvedValue(result),
+    all: vi.fn().mockResolvedValue(blogResult),
   }
-  vi.mocked(queryCollection).mockReturnValue(query as never)
-  return query
+  const categoryQuery = {
+    all: vi.fn().mockResolvedValue(categoryResult),
+  }
+  vi.mocked(queryCollection).mockImplementation((_event, name) =>
+    name === 'categories' ? categoryQuery as never : blogQuery as never)
 }
 
-async function renderFeed(posts: unknown[]) {
-  mockFeedQuery(posts)
+async function renderFeed(posts: unknown[], categoryResult?: unknown[]) {
+  mockQueries(posts, categoryResult)
   const setHeader = vi.fn()
   // Minimal structural shim: the handler only reads `node.res.setHeader`.
   const event = { node: { res: { setHeader } } } as never
@@ -98,5 +108,19 @@ describe('rss feed (GET /rss.xml)', () => {
     expect(item?.querySelector('link')?.textContent).toBe('https://ngoprekonline.example/blog/artikel-terbit')
     expect(item?.querySelector('guid')?.getAttribute('isPermaLink')).toBe('true')
     expect(new Date(item?.querySelector('pubDate')?.textContent ?? '').getUTCFullYear()).toBe(2026)
+  })
+
+  it('labels each item with the curated category of its post', async () => {
+    const { xml } = await renderFeed([{ ...publishedPost, category: 'tutorial' }])
+
+    const doc = parseXml(xml)
+    expect(doc.querySelector('item > category')?.textContent).toBe('Tutorial')
+  })
+
+  it('falls back to the raw slug when a post category is not in the curated list', async () => {
+    const { xml } = await renderFeed([{ ...publishedPost, category: 'hilang' }], [])
+
+    const doc = parseXml(xml)
+    expect(doc.querySelector('item > category')?.textContent).toBe('hilang')
   })
 })

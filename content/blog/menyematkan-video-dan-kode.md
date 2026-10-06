@@ -1,6 +1,7 @@
 ---
 title: Menyematkan Video dan Kode di Artikel
 description: Contoh post dengan gambar, blok kode, dan sematan video YouTube lewat komponen MDC.
+category: tutorial
 draft: false
 image: /images/blog/cover-contoh.svg
 publishedAt: 2026-10-05
