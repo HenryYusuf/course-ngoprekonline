@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useSeoMeta } from '#imports'
 
+import { findCategory } from '#shared/utils/categories'
+
 import PostCard from '~/components/PostCard.vue'
+import { useCategories } from '~/composables/useCategories'
 import { usePublishedPosts } from '~/composables/usePublishedPosts'
 
 const { public: { siteName, siteUrl, siteDescription } } = useRuntimeConfig()
 
 const posts = (await usePublishedPosts()).slice(0, 3)
+const categories = await useCategories()
 
 useSeoMeta({
   title: siteName,
@@ -41,7 +45,12 @@ useHead({
         Artikel terbaru
       </h2>
       <div class="mt-4 flex flex-col gap-4">
-        <PostCard v-for="post in posts" :key="post.path" :post="post" />
+        <PostCard
+          v-for="post in posts"
+          :key="post.path"
+          :post="post"
+          :category="findCategory(categories, post.category ?? '')"
+        />
       </div>
     </section>
   </main>

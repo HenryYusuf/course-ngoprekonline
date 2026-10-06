@@ -1,6 +1,7 @@
 ---
 title: Post Draf (Belum Dipublikasikan)
 description: Contoh post draf dengan tanggal masa depan yang tidak tampil di produksi.
+category: umum
 publishedAt: 2026-12-01
 draft: true
 tags:

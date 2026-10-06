@@ -3,6 +3,12 @@ import { describe, expect, it, vi } from 'vitest'
 
 import PostPage from './[slug].vue'
 
+vi.mock('~/composables/useCategories', () => ({
+  useCategories: vi.fn(async () => [
+    { slug: 'umum', label: 'Umum', description: 'Catatan ringan seputar situs.' },
+  ]),
+}))
+
 vi.mock('~/composables/usePublishedPosts', () => ({
   usePublishedPost: vi.fn(async (path: string) => {
     if (path === '/blog/halo-dunia') {
@@ -11,6 +17,7 @@ vi.mock('~/composables/usePublishedPosts', () => ({
         title: 'Halo Dunia',
         description: 'Post pertama.',
         publishedAt: new Date('2026-09-20'),
+        category: 'umum',
         tags: ['umum'],
       }
     }
@@ -50,6 +57,14 @@ describe('blog post page', () => {
 
     const badge = wrapper.findAll('span').find(span => span.text() === 'Draf')
     expect(badge).toBeUndefined()
+  })
+
+  it('links the post category to its archive near the title', async () => {
+    const wrapper = await mountSuspended(PostPage, { route: '/blog/halo-dunia' })
+
+    const link = wrapper.find('a[href="/blog/category/umum"]')
+    expect(link.exists()).toBe(true)
+    expect(link.text()).toBe('Umum')
   })
 
   it('renders nothing for unknown posts (fatal 404 is verified e2e)', async () => {

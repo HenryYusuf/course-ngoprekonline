@@ -1,6 +1,7 @@
 ---
 title: Halo Dunia
 description: Post pertama di blog Ngoprek Online, sekaligus contoh post dengan teks dan tautan.
+category: umum
 publishedAt: 2026-09-20
 tags:
   - umum

@@ -12,6 +12,8 @@ const props = defineProps<{
     image?: string
     tags?: string[]
   }
+  /** Resolved Category of the post, provided by the page that owns the curated list. */
+  category?: { slug: string, label: string }
 }>()
 
 const isoDate = computed(() => new Date(props.post.publishedAt).toISOString())
@@ -29,6 +31,13 @@ const isoDate = computed(() => new Date(props.post.publishedAt).toISOString())
       {{ post.description }}
     </p>
     <div class="mt-3 flex items-center gap-3 text-sm text-gray-500">
+      <NuxtLink
+        v-if="category"
+        :to="`/blog/category/${category.slug}`"
+        class="text-gray-700 font-medium hover:text-blue-600"
+      >
+        {{ category.label }}
+      </NuxtLink>
       <time :datetime="isoDate">{{ formatDate(post.publishedAt) }}</time>
       <NuxtLink
         v-for="tag in post.tags"

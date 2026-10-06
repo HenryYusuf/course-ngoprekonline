@@ -42,6 +42,7 @@ Create `content/blog/<slug>.md` (frontmatter example):
 ---
 title: Judul Post
 description: Ringkasan singkat untuk daftar blog dan SEO.
+category: tutorial
 publishedAt: 2026-10-05
 image: /images/blog/<slug>/cover.png
 tags:
@@ -51,18 +52,22 @@ draft: false
 ---
 ```
 
-`image` is optional; put files under `public/images/blog/`. The body is Markdown supporting code blocks and video embeds via MDC components:
+`image` is optional; put files under `public/images/blog/`. `category` is required: pick the slug of a curated category (see below). The body is Markdown supporting code blocks and video embeds via MDC components:
 
 ```md
 ::youtube{id="VIDEO_ID"}
 ::vimeo{id="VIDEO_ID"}
 ```
 
+### Categories
+
+Every post carries exactly one **Category**, a curated primary grouping distinct from free-form tags (see `docs/adr/0003-curated-categories-as-content-coexisting-with-tags.md`). The list lives as content: one YAML file per category under `content/categories/`, holding the `slug` (which must match the file name), a `label`, and an Indonesian `description`. Posts reference the category by slug; a post whose slug is not in the list fails the build and the content invariant test.
+
 ### Publish gate
 
 A post is visible on the public site only when it is **not** a draft and its `publishedAt` date has passed. The gate lives in one place (`shared/utils/publishing.ts`) and applies to every surface:
 
-- Lists (`/`, `/blog`, `/blog/tag/[tag]`): draft and future-dated posts never appear.
+- Lists (`/`, `/blog`, `/blog/tag/[tag]`, `/blog/category/[category]`): draft and future-dated posts never appear.
 - Post pages (`/blog/[slug]`): draft posts render with a `Draf` badge in dev only; production returns 404.
 
 ### Editing in Nuxt Studio
@@ -116,5 +121,6 @@ Public blog pages are prerendered at build time; the running server stays availa
 | `/blog` | All published posts |
 | `/blog/[slug]` | Post detail with prose, images, code, and video embeds |
 | `/blog/tag/[tag]` | Tag archive |
+| `/blog/category/[category]` | Category archive (404 for unknown slugs) |
 | `/rss.xml` | RSS feed of the 20 most recent published posts |
 | `/sitemap.xml` | Sitemap (via `@nuxtjs/sitemap`) |
