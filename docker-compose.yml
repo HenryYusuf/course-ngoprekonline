@@ -9,9 +9,10 @@ services:
     environment:
       # Used by SSR at request time (canonical/OG tags, RSS)
       NUXT_PUBLIC_SITE_URL: ${NUXT_PUBLIC_SITE_URL:-https://ngoprekonline.example}
-      # Studio production editing (optional): create a GitHub OAuth app, then uncomment
-      # STUDIO_GITHUB_CLIENT_ID: ${STUDIO_GITHUB_CLIENT_ID}
-      # STUDIO_GITHUB_CLIENT_SECRET: ${STUDIO_GITHUB_CLIENT_SECRET}
+      # Studio production editing: create a GitHub OAuth app via
+      # scripts/setup-studio.sh, which writes these to .env.
+      STUDIO_GITHUB_CLIENT_ID: ${STUDIO_GITHUB_CLIENT_ID:-}
+      STUDIO_GITHUB_CLIENT_SECRET: ${STUDIO_GITHUB_CLIENT_SECRET:-}
     ports:
       # Bound to localhost so the app sits behind a reverse proxy (nginx/Caddy).
       # To expose directly instead, use '3000:3000'.
