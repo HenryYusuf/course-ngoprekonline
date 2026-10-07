@@ -5,63 +5,56 @@ import HomePage from './index.vue'
 
 vi.mock('~/composables/useCategories', () => ({
   useCategories: vi.fn(async () => [
-    { slug: 'tutorial', label: 'Tutorial', description: 'Panduan langkah demi langkah.' },
-    { slug: 'umum', label: 'Umum', description: 'Catatan ringan seputar situs.' },
+    { slug: 'umum', label: 'Umum', description: 'd' },
+    { slug: 'opini', label: 'Opini', description: 'd' },
   ]),
+}))
+
+// 30 published posts: exactly one full archive page (24) plus 6 on page 2,
+// matching the demo content supply that the ddpanda-style layout ships
+// with. Newest first, mirroring the DESC publish order.
+const PUBLISHED = Array.from({ length: 30 }, (_, i) => ({
+  path: `/blog/post-${i + 1}`,
+  title: `Post ${i + 1}`,
+  description: 'deskripsi demo',
+  publishedAt: new Date(2026, 8, 30 - i),
+  category: i % 2 === 0 ? 'umum' : 'opini',
 }))
 
 vi.mock('~/composables/usePublishedPosts', () => ({
-  usePublishedPosts: vi.fn(async () => [
-    {
-      path: '/blog/terbaru',
-      title: 'Post Terbaru',
-      description: 'Paling baru.',
-      publishedAt: new Date('2026-10-05'),
-      category: 'umum',
-      tags: ['umum'],
-    },
-    {
-      path: '/blog/kedua',
-      title: 'Post Kedua',
-      description: 'Baru kedua.',
-      publishedAt: new Date('2026-10-01'),
-      tags: ['umum'],
-    },
-    {
-      path: '/blog/ketiga',
-      title: 'Post Ketiga',
-      description: 'Baru ketiga.',
-      publishedAt: new Date('2026-09-25'),
-      tags: [],
-    },
-    {
-      path: '/blog/keempat',
-      title: 'Post Keempat',
-      description: 'Tidak boleh tampil di beranda.',
-      publishedAt: new Date('2026-09-20'),
-      tags: [],
-    },
-  ]),
+  usePublishedPosts: vi.fn(async () => PUBLISHED),
 }))
 
 describe('homepage', () => {
-  it('shows the 3 most recent published posts and links to the blog', async () => {
-    const wrapper = await mountSuspended(HomePage)
+  it('renders hero, 10-post stream, panels, and a 24-card first archive page with NEXT', async () => {
+    const wrapper = await mountSuspended(HomePage, { route: '/?page=1' })
     const html = wrapper.html()
 
-    expect(html).toContain('Post Terbaru')
-    expect(html).toContain('Post Kedua')
-    expect(html).toContain('Post Ketiga')
-    // Only the 3 newest posts belong on the homepage
-    expect(html).not.toContain('Post Keempat')
-    expect(wrapper.find('a[href="/blog"]').exists()).toBe(true)
+    expect(html).toContain('Terbitkan.')
+    expect(html).toContain('--stream -n 10')
+    expect(html).toContain('--latest')
+    expect(html).toContain('ARSIP --archive')
+    expect(html).toContain('Post 1')
+    expect(html).toContain('Post 24')
+    expect(html).not.toContain('Post 25')
+    expect(wrapper.find('a[href="/?page=2"]').exists()).toBe(true)
   })
 
-  it('labels recent post cards with a category chip, not a nested link (single-anchor card, spec #12)', async () => {
-    const wrapper = await mountSuspended(HomePage)
-
+  it('renders page 2 with the 6 remaining posts and no NEXT link', async () => {
+    const wrapper = await mountSuspended(HomePage, { route: '/?page=2' })
     const html = wrapper.html()
-    expect(html).toContain('Umum')
-    expect(html).not.toContain('/blog/category/')
+
+    expect(html).toContain('Post 25')
+    expect(html).toContain('Post 30')
+    expect(html).not.toContain('Post 24')
+    expect(html).not.toContain('>NEXT<')
+  })
+
+  it('degrades a garbage page param to the first page', async () => {
+    const wrapper = await mountSuspended(HomePage, { route: '/?page=abc' })
+    const html = wrapper.html()
+
+    expect(html).toContain('Post 1')
+    expect(html).not.toContain('Post 25')
   })
 })
