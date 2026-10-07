@@ -57,11 +57,11 @@ describe('homepage', () => {
     expect(wrapper.find('a[href="/blog"]').exists()).toBe(true)
   })
 
-  it('labels recent post cards with their category archive link', async () => {
+  it('labels recent post cards with a category chip, not a nested link (single-anchor card, spec #12)', async () => {
     const wrapper = await mountSuspended(HomePage)
 
-    const link = wrapper.find('a[href="/blog/category/umum"]')
-    expect(link.exists()).toBe(true)
-    expect(link.text()).toBe('Umum')
+    const html = wrapper.html()
+    expect(html).toContain('Umum')
+    expect(html).not.toContain('/blog/category/')
   })
 })
