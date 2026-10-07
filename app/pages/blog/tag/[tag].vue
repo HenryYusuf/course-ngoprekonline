@@ -27,15 +27,16 @@ useHead({
 </script>
 
 <template>
-  <main class="mx-auto max-w-3xl px-4 py-8">
-    <h1 class="text-3xl font-bold">
-      Tag: {{ tag }}
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+    <h1 class="mb-5 min-w-0 truncate label-caps text-foreground">
+      <span class="text-primary">$</span>
+      TAG: {{ tag }}
     </h1>
-    <div class="mt-6 flex flex-col gap-4">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
       <PostCard v-for="post in posts" :key="post.path" :post="post" />
-      <p v-if="posts.length === 0" class="text-gray-500">
-        Belum ada artikel dengan tag ini.
-      </p>
     </div>
+    <p v-if="posts.length === 0" class="label-caps text-muted-foreground">
+      $ BELUM ADA POST
+    </p>
   </main>
 </template>
