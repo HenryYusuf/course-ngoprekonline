@@ -19,6 +19,9 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
+  // Self-hosted font faces for the ddpanda-style design tokens (issue #12).
+  css: ['~/assets/css/fonts.css'],
+
   // MDC tags like `::youtube` resolve by name at runtime, so embed components
   // must be globally registered. Every other component is imported explicitly.
   components: [
