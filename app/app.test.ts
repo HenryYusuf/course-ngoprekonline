@@ -27,4 +27,21 @@ describe('app shell', () => {
     expect(html).toContain('/rss.xml')
     expect(html).toContain('ALL RIGHTS RESERVED')
   })
+
+  it('renders server-only routes like /rss.xml as plain anchors, not NuxtLink', async () => {
+    // NuxtLink resolves its target through vue-router; /rss.xml is a Nitro
+    // server route invisible to the router, so a NuxtLink there warns
+    // [VUE_ROUTER_R0004] No match found on every mount (dev + tests).
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    try {
+      await mountSuspended(App)
+      const routerWarnings = warn.mock.calls
+        .map(args => args.join(' '))
+        .filter(text => text.includes('VUE_ROUTER_R0004'))
+      expect(routerWarnings).toEqual([])
+    }
+    finally {
+      warn.mockRestore()
+    }
+  })
 })

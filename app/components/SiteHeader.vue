@@ -17,14 +17,14 @@ const categories = await useCategories()
         <span class="truncate text-lg text-foreground font-bold tracking-tight font-display">Ngoprek<span class="text-primary">.</span>Online</span>
       </NuxtLink>
       <nav class="flex shrink-0 items-center gap-2 sm:gap-4" aria-label="Navigasi utama">
-        <NuxtLink
+        <a
           v-for="routeItem in ROUTES"
           :key="routeItem.to"
-          :to="routeItem.to"
+          :href="routeItem.to"
           class="hidden label-caps text-muted-foreground transition-colors sm:inline hover:text-foreground"
         >
           {{ routeItem.label }}
-        </NuxtLink>
+        </a>
         <NuxtLink
           v-for="category in categories"
           :key="category.slug"
