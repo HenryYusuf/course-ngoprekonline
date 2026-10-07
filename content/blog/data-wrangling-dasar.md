@@ -1,6 +1,6 @@
 ---
-title: Data Wrangling: Mengubah Data Kacau jadi Siap Analisis
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: data wrangling.
+title: "Data Wrangling: Mengubah Data Kacau jadi Siap Analisis"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: data wrangling."
 category: tutorial
 publishedAt: 2026-08-26
 tags:

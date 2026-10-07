@@ -1,6 +1,6 @@
 ---
 title: Catatan Mengelola Waktu Saat Kuliah dan Kerja
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: catatan mengelola waktu saat kuliah dan kerja.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: catatan mengelola waktu saat kuliah dan kerja."
 category: umum
 publishedAt: 2026-08-12
 tags:

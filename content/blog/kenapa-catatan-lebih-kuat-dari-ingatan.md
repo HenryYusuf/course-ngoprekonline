@@ -1,6 +1,6 @@
 ---
 title: Kenapa Catatan Selalu Mengalahkan Ingatan
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: kenapa catatan selalu mengalahkan ingatan.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: kenapa catatan selalu mengalahkan ingatan."
 category: opini
 publishedAt: 2026-07-06
 tags:

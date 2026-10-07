@@ -1,6 +1,6 @@
 ---
 title: Dasar Animasi Motion Design di After Effects
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: dasar animasi motion design di after effects.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: dasar animasi motion design di after effects."
 category: tutorial
 publishedAt: 2026-09-05
 tags:

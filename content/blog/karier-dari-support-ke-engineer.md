@@ -1,6 +1,6 @@
 ---
-title: Dari Support ke Engineer: Jalur yang Saya Tempuh
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: dari support ke engineer.
+title: "Dari Support ke Engineer: Jalur yang Saya Tempuh"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: dari support ke engineer."
 category: opini
 publishedAt: 2026-06-20
 tags:

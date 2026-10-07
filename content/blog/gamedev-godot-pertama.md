@@ -1,6 +1,6 @@
 ---
 title: Game Kecil Pertama dengan Godot dalam Satu Minggu
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: game kecil pertama dengan godot dalam satu minggu.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: game kecil pertama dengan godot dalam satu minggu."
 category: umum
 publishedAt: 2026-06-11
 tags:

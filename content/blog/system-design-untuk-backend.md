@@ -1,6 +1,6 @@
 ---
-title: System Design untuk Backend Engineer: Mulai dari Mana
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: system design untuk backend engineer.
+title: "System Design untuk Backend Engineer: Mulai dari Mana"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: system design untuk backend engineer."
 category: tutorial
 publishedAt: 2026-08-07
 tags:

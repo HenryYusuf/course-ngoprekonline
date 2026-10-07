@@ -1,6 +1,6 @@
 ---
-title: Mikrointeraksi: Animasi Kecil yang Membuat UI Terasa Hidup
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: mikrointeraksi.
+title: "Mikrointeraksi: Animasi Kecil yang Membuat UI Terasa Hidup"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: mikrointeraksi."
 category: tutorial
 publishedAt: 2026-07-24
 tags:

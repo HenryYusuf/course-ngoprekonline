@@ -1,6 +1,6 @@
 ---
-title: SQL untuk Analis: Query yang Sering Dipakai Kerja
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: sql untuk analis.
+title: "SQL untuk Analis: Query yang Sering Dipakai Kerja"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: sql untuk analis."
 category: tutorial
 publishedAt: 2026-08-17
 tags:

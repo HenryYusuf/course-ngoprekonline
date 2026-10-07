@@ -1,6 +1,6 @@
 ---
-title: Deploy Aplikasi Pertama ke VPS: Pengalaman dan Jalanan
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: deploy aplikasi pertama ke vps.
+title: "Deploy Aplikasi Pertama ke VPS: Pengalaman dan Jalanan"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: deploy aplikasi pertama ke vps."
 category: umum
 publishedAt: 2026-07-19
 tags:

@@ -19,8 +19,10 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
-  // Self-hosted font faces for the ddpanda-style design tokens (issue #12).
-  css: ['~/assets/css/fonts.css'],
+  // Tailwind-compatible reset so `border`-style utilities actually render
+  // (UnoCSS ships no CSS reset; ddpanda look relies on it) + self-hosted font
+  // faces for the ddpanda-style design tokens (issue #12).
+  css: ['@unocss/reset/tailwind.css', '~/assets/css/fonts.css'],
 
   // MDC tags like `::youtube` resolve by name at runtime, so embed components
   // must be globally registered. Every other component is imported explicitly.
@@ -31,9 +33,17 @@ export default defineNuxtConfig({
   nitro: {
     imports: false,
     prerender: {
-      routes: ['/'],
+      // Entry must stay crawlable while `/` itself is excluded (routeRules
+      // below): the static layer ignores query strings, so a prerendered
+      // index.html would hijack `/?page=N` and always serve page 1 (spec #12).
+      // `/rss.xml` is listed explicitly because the crawler skips .xml links.
+      routes: ['/blog', '/rss.xml'],
       crawlLinks: true,
     },
+  },
+
+  routeRules: {
+    '/': { prerender: false },
   },
 
   runtimeConfig: {

@@ -1,6 +1,6 @@
 ---
 title: Belajar Paling Lengket Justru dari Error
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: belajar paling lengket justru dari error.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: belajar paling lengket justru dari error."
 category: opini
 publishedAt: 2026-05-09
 tags:

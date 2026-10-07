@@ -1,6 +1,6 @@
 ---
-title: Editing Video Dasar: Seni Memotong Adegan
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: editing video dasar.
+title: "Editing Video Dasar: Seni Memotong Adegan"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: editing video dasar."
 category: tutorial
 publishedAt: 2026-06-28
 tags:
