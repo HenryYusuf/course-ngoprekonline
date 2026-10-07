@@ -39,14 +39,17 @@ useHead({
     <article class="prose">
       <span
         v-if="post.draft"
-        class="inline-block rounded bg-yellow-100 px-2 py-0.5 text-sm text-yellow-800 font-medium"
+        class="inline-block border border-border bg-surface-low px-2 py-0.5 text-sm text-foreground font-medium"
       >Draf</span>
-      <h1>{{ post.title }}</h1>
-      <div class="mt-1 flex items-center gap-3 text-gray-500">
+      <h1 class="text-3xl text-foreground font-extrabold tracking-tight font-display sm:text-5xl">
+        {{ post.title }}
+      </h1>
+      <div class="mb-6 mt-3 flex items-center gap-3 label-caps text-muted-foreground">
+        <span class="text-primary">$</span>
         <NuxtLink
           v-if="category"
           :to="`/blog/category/${post.category}`"
-          class="text-gray-700 font-medium hover:text-blue-600"
+          class="hover:text-foreground"
         >
           {{ category.label }}
         </NuxtLink>

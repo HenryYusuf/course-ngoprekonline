@@ -25,30 +25,31 @@ useHead({
 </script>
 
 <template>
-  <main class="mx-auto max-w-3xl px-4 py-8">
-    <h1 class="text-3xl font-bold">
-      Blog
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+    <h1 class="mb-5 min-w-0 truncate label-caps text-foreground">
+      <span class="text-primary">$</span>
+      BLOG --semua
     </h1>
-    <nav aria-label="Kategori artikel" class="mt-4 flex flex-wrap gap-2">
+    <nav aria-label="Kategori artikel" class="mb-8 flex flex-wrap gap-2">
       <NuxtLink
         v-for="category in categories"
         :key="category.slug"
         :to="`/blog/category/${category.slug}`"
-        class="border border-gray-200 rounded-full px-3 py-1 text-sm text-gray-600 hover:border-blue-600 hover:text-blue-600"
+        class="border border-border bg-card px-2.5 py-1.5 label-caps text-muted-foreground transition-colors hover:border-primary hover:text-primary"
       >
         {{ category.label }}
       </NuxtLink>
     </nav>
-    <div class="mt-6 flex flex-col gap-4">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
       <PostCard
         v-for="post in posts"
         :key="post.path"
         :post="post"
         :category="findCategory(categories, post.category ?? '')"
       />
-      <p v-if="posts.length === 0" class="text-gray-500">
-        Belum ada artikel.
-      </p>
     </div>
+    <p v-if="posts.length === 0" class="label-caps text-muted-foreground">
+      $ BELUM ADA POST
+    </p>
   </main>
 </template>
