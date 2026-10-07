@@ -1,6 +1,6 @@
 ---
 title: Alur Kerja GitHub yang Rapi untuk Tim Kecil
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: alur kerja github yang rapi untuk tim kecil.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: alur kerja github yang rapi untuk tim kecil."
 category: umum
 publishedAt: 2026-08-30
 tags:

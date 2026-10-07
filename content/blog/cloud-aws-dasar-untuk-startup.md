@@ -1,6 +1,6 @@
 ---
-title: Dasar AWS untuk Startup: Layanan yang Benar-benar Dipakai
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: dasar aws untuk startup.
+title: "Dasar AWS untuk Startup: Layanan yang Benar-benar Dipakai"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: dasar aws untuk startup."
 category: tutorial
 publishedAt: 2026-04-26
 tags:

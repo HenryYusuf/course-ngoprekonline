@@ -1,6 +1,6 @@
 ---
 title: Etika AI Ketika Mesin Ikut Menulis Konten
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: etika ai ketika mesin ikut menulis konten.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: etika ai ketika mesin ikut menulis konten."
 category: opini
 publishedAt: 2026-07-29
 tags:

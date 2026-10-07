@@ -36,6 +36,7 @@ catalogs:
     '@unocss/eslint-plugin': ^66.10.5
     '@unocss/nuxt': ^66.10.5
     '@unocss/preset-typography': ^66.10.5
+    '@unocss/reset': ^66.10.5
     unocss: ^66.10.5
     vue: ^3.5.43
   prod:

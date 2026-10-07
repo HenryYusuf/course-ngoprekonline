@@ -1,6 +1,6 @@
 ---
-title: Psikologi Produk: Memahami Keputusan Pengguna
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: psikologi produk.
+title: "Psikologi Produk: Memahami Keputusan Pengguna"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: psikologi produk."
 category: opini
 publishedAt: 2026-09-18
 tags:

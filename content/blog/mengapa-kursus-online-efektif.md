@@ -1,6 +1,6 @@
 ---
 title: Mengapa Kursus Online Efektif untuk Pekerja Sibuk
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: mengapa kursus online efektif untuk pekerja sibuk.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: mengapa kursus online efektif untuk pekerja sibuk."
 category: opini
 publishedAt: 2026-10-02
 tags:

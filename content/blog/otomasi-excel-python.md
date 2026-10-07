@@ -1,6 +1,6 @@
 ---
-title: Excel Unleashed: Belajar Python di Excel
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: excel unleashed.
+title: "Excel Unleashed: Belajar Python di Excel"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: excel unleashed."
 category: tutorial
 publishedAt: 2026-10-06
 tags:

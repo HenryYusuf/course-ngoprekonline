@@ -1,6 +1,6 @@
 ---
-title: Belajar Rust di Malam Minggu: Realistis atau Tidak?
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: belajar rust di malam minggu.
+title: "Belajar Rust di Malam Minggu: Realistis atau Tidak?"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: belajar rust di malam minggu."
 category: opini
 publishedAt: 2026-08-21
 tags:

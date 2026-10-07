@@ -1,6 +1,6 @@
 ---
 title: Desain Aplikasi Lebih Cepat di Figma
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: desain aplikasi lebih cepat di figma.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: desain aplikasi lebih cepat di figma."
 category: tutorial
 publishedAt: 2026-09-15
 tags:

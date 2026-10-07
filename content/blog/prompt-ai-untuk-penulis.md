@@ -1,6 +1,6 @@
 ---
-title: Prompt AI untuk Penulis: dari Kerangka ke Draf
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: prompt ai untuk penulis.
+title: "Prompt AI untuk Penulis: dari Kerangka ke Draf"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: prompt ai untuk penulis."
 category: tutorial
 publishedAt: 2026-09-08
 tags:

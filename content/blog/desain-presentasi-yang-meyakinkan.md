@@ -1,6 +1,6 @@
 ---
-title: Make the Case: Menyajikan Ide Desain yang Meyakinkan
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: make the case.
+title: "Make the Case: Menyajikan Ide Desain yang Meyakinkan"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: make the case."
 category: umum
 publishedAt: 2026-09-25
 tags:

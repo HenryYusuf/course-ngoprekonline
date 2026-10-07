@@ -1,6 +1,6 @@
 ---
-title: MLOps Bootcamp: Membangun Infrastruktur AI Nyata
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: mlops bootcamp.
+title: "MLOps Bootcamp: Membangun Infrastruktur AI Nyata"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: mlops bootcamp."
 category: tutorial
 publishedAt: 2026-09-28
 tags:

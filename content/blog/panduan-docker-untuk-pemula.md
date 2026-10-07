@@ -1,6 +1,6 @@
 ---
-title: Panduan Docker untuk Pemula: dari Image ke Deploy
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: panduan docker untuk pemula.
+title: "Panduan Docker untuk Pemula: dari Image ke Deploy"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: panduan docker untuk pemula."
 category: tutorial
 publishedAt: 2026-10-04
 tags:

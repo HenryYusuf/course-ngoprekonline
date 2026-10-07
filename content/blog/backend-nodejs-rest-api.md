@@ -1,6 +1,6 @@
 ---
 title: Membangun REST API dengan Node.js dari Nol
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: membangun rest api dengan node.js dari nol.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: membangun rest api dengan node.js dari nol."
 category: tutorial
 publishedAt: 2026-09-22
 tags:

@@ -1,5 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "project": ["app/**/*.{ts,vue}", "shared/**/*.ts"],
-  "ignoreDependencies": ["vitest-environment-nuxt", "vue-tsc"]
+  "ignoreDependencies": ["vitest-environment-nuxt", "vue-tsc", "@unocss/reset"]
 }

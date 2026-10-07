@@ -1,6 +1,6 @@
 ---
-title: Jejak Persiapan Sertifikasi CCNA: Catatan Minggu Pertama
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: jejak persiapan sertifikasi ccna.
+title: "Jejak Persiapan Sertifikasi CCNA: Catatan Minggu Pertama"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: jejak persiapan sertifikasi ccna."
 category: umum
 publishedAt: 2026-09-11
 tags:

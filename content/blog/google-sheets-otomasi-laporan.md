@@ -1,6 +1,6 @@
 ---
 title: Otomasi Laporan Mingguan dengan Google Sheets
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: otomasi laporan mingguan dengan google sheets.
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: otomasi laporan mingguan dengan google sheets."
 category: tutorial
 publishedAt: 2026-05-22
 tags:

@@ -1,6 +1,6 @@
 ---
-title: Testing Frontend dengan Vitest: Pola yang Saya Pakai
-description: Post demo untuk menguji layout blog Ngoprek Online. Topik: testing frontend dengan vitest.
+title: "Testing Frontend dengan Vitest: Pola yang Saya Pakai"
+description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: testing frontend dengan vitest."
 category: tutorial
 publishedAt: 2026-07-13
 tags:
