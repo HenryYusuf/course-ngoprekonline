@@ -18,14 +18,14 @@ const categories = await useCategories()
     <div class="mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-2 px-6 py-6">
       <span class="label-caps text-muted-foreground">&copy; {{ year }} NGOPREK.ONLINE // ALL RIGHTS RESERVED</span>
       <nav class="flex flex-wrap items-center gap-4 label-caps text-muted-foreground" aria-label="Navigasi footer">
-        <NuxtLink
+        <a
           v-for="routeItem in ROUTES"
           :key="routeItem.to"
-          :to="routeItem.to"
+          :href="routeItem.to"
           class="hover:text-foreground"
         >
           {{ routeItem.label }}
-        </NuxtLink>
+        </a>
         <NuxtLink
           v-for="category in categories"
           :key="category.slug"
