@@ -39,7 +39,7 @@ ENV NODE_ENV=production \
     PORT=3000
 
 WORKDIR /app
-COPY --from=builder --chown=node:node /app/.output ./
+COPY --from=builder --chown=node:node /app/.output/ /app/.output/
 
 # Runtime site URL (used by SSR canonical/OG/RSS at request time)
 ARG NUXT_PUBLIC_SITE_URL=https://ngoprekonline.example
