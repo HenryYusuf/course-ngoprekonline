@@ -25,21 +25,27 @@ useHead({
 </script>
 
 <template>
-  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-    <h1 class="mb-5 min-w-0 truncate label-caps text-foreground">
-      <span class="text-primary">$</span>
-      BLOG --semua
-    </h1>
+  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
+    <header class="mb-8 border-b border-border pb-7">
+      <h1 class="text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">
+        Semua Paket
+      </h1>
+      <p class="mt-3 label-caps text-muted-foreground">
+        {{ posts.length }} paket terbit · urut terbaru dulu
+      </p>
+    </header>
+
     <nav aria-label="Kategori artikel" class="mb-8 flex flex-wrap gap-2">
       <NuxtLink
         v-for="category in categories"
         :key="category.slug"
         :to="`/blog/category/${category.slug}`"
-        class="border border-border bg-card px-2.5 py-1.5 label-caps text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+        class="stamp transition-colors hover:bg-foreground hover:text-background"
       >
         {{ category.label }}
       </NuxtLink>
     </nav>
+
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
       <PostCard
         v-for="post in posts"
@@ -48,8 +54,9 @@ useHead({
         :category="findCategory(categories, post.category ?? '')"
       />
     </div>
+
     <p v-if="posts.length === 0" class="label-caps text-muted-foreground">
-      $ BELUM ADA POST
+      Belum ada paket terbit
     </p>
   </main>
 </template>

@@ -8,6 +8,13 @@ tags:
   - excel
   - otomasi
 draft: false
+resources:
+  - title: "Cheat sheet: otomasi Excel dengan Python"
+    file: /downloads/cheat-sheet-otomasi-excel-python.md
+    bytes: 2067
+  - title: "Template script otomasi Excel (.py)"
+    file: /downloads/template-script-otomasi-excel.py
+    bytes: 1621
 ---
 
 <!-- demo post (spec #12): boleh dihapus massal -->

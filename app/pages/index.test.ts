@@ -26,14 +26,15 @@ vi.mock('~/composables/usePublishedPosts', () => ({
 }))
 
 describe('homepage', () => {
-  it('renders hero, 10-post stream, panels, and a 24-card first archive page with NEXT', async () => {
+  it('renders hero, 10-post shelf, racks, and a 24-card first archive page with NEXT', async () => {
     const wrapper = await mountSuspended(HomePage, { route: '/?page=1' })
     const html = wrapper.html()
 
-    expect(html).toContain('Terbitkan.')
-    expect(html).toContain('--stream -n 10')
-    expect(html).toContain('--latest')
-    expect(html).toContain('ARSIP --archive')
+    expect(html).toContain('Paket terbaru · Umum')
+    expect(html).toContain('BACA PAKET')
+    expect(html).toContain('Keluaran Terbaru')
+    expect(html).toContain('Rak Arsip')
+    expect(html).toContain('Arsip Lengkap')
     expect(html).toContain('Post 1')
     expect(html).toContain('Post 24')
     expect(html).not.toContain('Post 25')
@@ -47,7 +48,9 @@ describe('homepage', () => {
     expect(html).toContain('Post 25')
     expect(html).toContain('Post 30')
     expect(html).not.toContain('Post 24')
-    expect(html).not.toContain('>NEXT<')
+    // No forward page: the disabled NEXT span is not a link.
+    expect(html).not.toContain('/?page=3')
+    expect(wrapper.find('a[href="/"]').exists()).toBe(true)
   })
 
   it('degrades a garbage page param to the first page', async () => {

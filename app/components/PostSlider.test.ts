@@ -20,13 +20,14 @@ function post(n: number) {
 }
 
 describe('postSlider', () => {
-  it('caps the stream at 10 cards with slider widths and a terminal heading', async () => {
+  it('caps the shelf at 10 cards with slider widths and a plain heading', async () => {
     const wrapper = await mountSuspended(PostSlider, {
       props: { posts: Array.from({ length: 14 }, (_, i) => post(i + 1)) },
     })
 
     const html = wrapper.html()
-    expect(html).toContain('--stream -n 10')
+    expect(html).toContain('Keluaran Terbaru')
+    expect(html).toContain('10 paket')
     expect(html).toContain('w-[85%]')
     for (let n = 1; n <= 10; n++) expect(html).toContain(`Post ${n}`)
     expect(html).not.toContain('Post 11')
@@ -40,5 +41,6 @@ describe('postSlider', () => {
     expect(html).toContain('Post 1')
     expect(html).toContain('Post 2')
     expect(html).not.toContain('Post 3')
+    expect(html).toContain('2 paket')
   })
 })

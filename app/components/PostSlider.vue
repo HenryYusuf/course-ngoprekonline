@@ -23,11 +23,13 @@ const latest = computed(() => props.posts.slice(0, 10))
 </script>
 
 <template>
-  <section class="pb-10 sm:pb-14">
-    <h2 class="mb-5 min-w-0 truncate label-caps text-foreground">
-      <span class="text-primary">$</span>
-      TERBARU --stream -n 10
-    </h2>
+  <section class="pb-12">
+    <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-xl font-extrabold tracking-[-0.01em] sm:text-2xl">
+        Keluaran Terbaru
+      </h2>
+      <span class="label-caps text-muted-foreground">{{ latest.length }} paket</span>
+    </div>
     <div class="no-scrollbar flex snap-x gap-4 overflow-x-auto px-4 -mx-4 sm:px-6 sm:-mx-6">
       <div
         v-for="post in latest"

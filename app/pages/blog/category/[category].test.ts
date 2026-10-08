@@ -45,14 +45,15 @@ describe('category archive page', () => {
     const wrapper = await mountSuspended(CategoryPage, { route: '/blog/category/tutorial' })
     const html = wrapper.html()
 
-    expect(html).toContain('KATEGORI: Tutorial')
+    expect(wrapper.find('h1').text()).toBe('Tutorial')
+    expect(html).toContain('paket di rak ini')
     expect(html).toContain('Panduan langkah demi langkah.')
   })
 
   it('renders an empty state for a known category without published posts', async () => {
     const wrapper = await mountSuspended(CategoryPage, { route: '/blog/category/opini' })
 
-    expect(wrapper.html()).toContain('$ BELUM ADA POST')
+    expect(wrapper.html()).toContain('Belum ada paket di rak ini')
   })
 
   it('404s for a slug outside the curated list', async () => {

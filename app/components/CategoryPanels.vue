@@ -15,35 +15,58 @@ const groups = computed(() => latestPerCategory(props.posts, categories, 2))
 </script>
 
 <template>
-  <section class="pb-10 sm:pb-14">
+  <section class="pb-12">
+    <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-xl font-extrabold tracking-[-0.01em] sm:text-2xl">
+        Rak Arsip
+      </h2>
+      <span class="label-caps text-muted-foreground">Per kategori</span>
+    </div>
+
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       <div
         v-for="group in groups"
         :key="group.category.slug"
-        class="border border-border bg-card"
+        class="flex flex-col border border-foreground/20 bg-card"
       >
-        <h3 class="min-w-0 truncate border-b border-border bg-surface-low px-5 py-3 label-caps text-foreground">
-          <span class="text-primary">$</span>
-          {{ group.category.slug }} --latest
-        </h3>
-        <ul class="divide-y divide-border">
+        <div class="flex items-center justify-between gap-3 border-b border-border bg-surface-low px-5 py-3">
+          <h3 class="min-w-0 truncate label-caps text-foreground">
+            Rak · {{ group.category.label }}
+          </h3>
+          <span class="h-2 w-2 shrink-0 bg-primary" aria-hidden="true" />
+        </div>
+
+        <ul class="flex-1 divide-y divide-border">
           <li v-for="post in group.posts" :key="post.path">
-            <NuxtLink :to="post.path" class="group block px-5 py-4 transition-colors hover:bg-accent">
-              <div class="flex items-center justify-between gap-4">
-                <h4 class="min-w-0 truncate text-base text-foreground font-bold leading-snug font-display transition-colors group-hover:text-primary">
-                  {{ post.title }}
-                </h4>
-                <span class="shrink-0 label-caps text-primary transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </div>
+            <NuxtLink
+              :to="post.path"
+              class="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-accent"
+            >
+              <span class="min-w-0 truncate font-bold leading-snug transition-colors group-hover:text-primary-deep">
+                {{ post.title }}
+              </span>
+              <svg
+                viewBox="0 0 16 16"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+                class="shrink-0 text-primary-deep transition-transform duration-300 group-hover:translate-x-1"
+              >
+                <path d="M3 8h10m0 0-4-4m4 4-4 4" />
+              </svg>
             </NuxtLink>
           </li>
         </ul>
-        <div class="px-5 py-3">
+
+        <div class="border-t border-border px-5 py-3">
           <NuxtLink
             :to="`/blog/category/${group.category.slug}`"
-            class="inline-flex items-center gap-1 label-caps text-primary hover:text-foreground"
+            class="label-caps text-primary-deep transition-colors hover:text-foreground"
           >
-            LIHAT SEMUA
+            Lihat semua
           </NuxtLink>
         </div>
       </div>

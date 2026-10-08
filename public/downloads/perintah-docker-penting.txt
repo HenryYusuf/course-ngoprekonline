@@ -1,0 +1,40 @@
+PERINTAH DOCKER PENTING, paket pendukung "Panduan Docker untuk Pemula"
+Ngoprek.Online · simpan di terminal sebelah
+
+=== HARI-HARI ===
+docker run -d --name belajar -p 8080:80 nginx   # jalankan di belakang, port 8080->80
+docker ps                                        # container yang hidup
+docker ps -a                                     # termasuk yang berhenti
+docker logs -f belajar                           # ikuti log
+docker exec -it belajar sh                       # masuk ke container
+docker stop belajar && docker rm belajar         # berhenti lalu hapus
+
+=== IMAGE ===
+docker images                                    # daftar image lokal
+docker pull nginx:1.27                           # selalu tulis tag versi
+docker build -t belajar-app:1.0 .                # build dari Dockerfile
+docker rmi nginx:1.26                            # bersihkan image lama
+
+=== VOLUME & DATA ===
+docker volume create data-belajar
+docker run -v data-belajar:/var/lib/app belajar-app:1.0
+docker system df                                # berapa ruang yang terpakai
+docker system prune                              # bersihkan sisa (tanya dulu di produksi)
+
+=== COMPOSE (multi-service) ===
+docker compose up -d
+docker compose ps
+docker compose logs -f app
+docker compose down          # berhenti + hapus container, volume tetap ada
+docker compose down -v       # ikut hapus volume (HATI-HATI: data ikut hilang)
+
+=== URUTAN BELAJAR YANG MASUK AKAL ===
+1. run / ps / logs / exec   → paham siklus hidup container
+2. build + Dockerfile       → paham image vs container
+3. volume                   → paham data yang harus bertahan
+4. compose                  → paham aplikasi lebih dari satu proses
+
+=== TANDA BAHAYA ===
+- Port sudah dipakai: "address already in use" → ganti angka di sisi kiri (-p).
+- Container mati terus: cek `docker logs`, biasanya perintah di CMD salah.
+- Image 10 GB: lupa .dockerignore dan COPY yang terlalu lebar.
