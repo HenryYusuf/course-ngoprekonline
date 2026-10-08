@@ -12,7 +12,7 @@ vi.mock('~/composables/useCategories', () => ({
 }))
 
 describe('categoryPanels', () => {
-  it('renders a terminal-style panel per non-empty category with 2 latest posts', async () => {
+  it('renders a shelf per non-empty category with 2 latest posts', async () => {
     const wrapper = await mountSuspended(CategoryPanels, {
       props: {
         posts: [
@@ -25,15 +25,16 @@ describe('categoryPanels', () => {
     })
 
     const html = wrapper.html()
-    expect(html).toContain('$')
-    expect(html).toContain('--latest')
-    expect(html).toContain('umum --latest')
-    expect(html).toContain('opini --latest')
+    expect(html).toContain('Rak Arsip')
+    expect(html).toContain('Rak · Umum')
+    expect(html).toContain('Rak · Opini')
     expect(html).toContain('A Terbaru')
     expect(html).toContain('B Lama')
+    expect(html).toContain('C Opini')
+    expect(html).toContain('/blog/a')
     expect(html).toContain('/blog/c')
     // Category without posts is omitted, uncurated posts never leak
-    expect(html).not.toContain('Kosong --latest')
+    expect(html).not.toContain('Rak · Kosong')
     expect(html).not.toContain('X Kosong')
   })
 })

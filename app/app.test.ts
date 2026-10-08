@@ -22,7 +22,7 @@ describe('app shell', () => {
 
     expect(wrapper.find('header').exists()).toBe(true)
     expect(wrapper.find('footer').exists()).toBe(true)
-    expect(html).toContain('&gt;_')
+    expect(html).toContain('Edutorial blog download')
     expect(html).toContain('/blog')
     expect(html).toContain('/rss.xml')
     expect(html).toContain('ALL RIGHTS RESERVED')

@@ -25,7 +25,6 @@ vi.mock('~/composables/usePublishedPosts', () => ({
       title: 'Menyematkan Video dan Kode di Artikel',
       description: 'Contoh post.',
       publishedAt: new Date('2026-10-05'),
-      image: '/images/blog/cover-contoh.svg',
       tags: ['nuxt', 'konten'],
     },
   ]),

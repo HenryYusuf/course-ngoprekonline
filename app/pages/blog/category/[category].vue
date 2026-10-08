@@ -37,14 +37,19 @@ useHead({
 </script>
 
 <template>
-  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-    <h1 class="mb-1 min-w-0 truncate label-caps text-foreground">
-      <span class="text-primary">$</span>
-      KATEGORI: {{ category.label }}
-    </h1>
-    <p class="mb-8 text-sm text-muted-foreground">
-      {{ category.description }}
-    </p>
+  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
+    <header class="mb-8 border-b border-border pb-7">
+      <h1 class="text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">
+        {{ category.label }}
+      </h1>
+      <p class="mt-3 label-caps text-muted-foreground">
+        {{ posts.length }} paket di rak ini
+      </p>
+      <p class="mt-4 max-w-[64ch] text-base text-muted-foreground leading-relaxed">
+        {{ category.description }}
+      </p>
+    </header>
+
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
       <PostCard
         v-for="post in posts"
@@ -53,8 +58,9 @@ useHead({
         :category="category"
       />
     </div>
+
     <p v-if="posts.length === 0" class="label-caps text-muted-foreground">
-      $ BELUM ADA POST
+      Belum ada paket di rak ini
     </p>
   </main>
 </template>

@@ -24,6 +24,14 @@ export default defineContentConfig({
         // Required, no default: a post without a curated Category must fail
         // loudly instead of shipping un-categorized (ADR 0003).
         category: z.string(),
+        // The download half of "Edutorial Blog Download": files shipped with
+        // the article. `bytes` must match the real file so spec plates never
+        // lie about package size.
+        resources: z.array(z.object({
+          title: z.string(),
+          file: z.string(),
+          bytes: z.number().int().positive(),
+        })).default([]),
       }),
     }),
   },
