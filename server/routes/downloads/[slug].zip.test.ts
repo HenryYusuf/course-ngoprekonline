@@ -9,7 +9,7 @@ vi.mock('@nuxt/content/nitro', () => ({
   queryCollection: vi.fn(),
 }))
 
-const storage = new Map<string, Uint8Array>()
+const storage = new Map<string, Uint8Array | string>()
 vi.mock('nitropack/runtime', () => ({
   useStorage: vi.fn(() => ({
     getItemRaw: vi.fn(async (key: string) => storage.get(key)),
@@ -81,6 +81,19 @@ describe('package zip (GET /downloads/[slug].zip)', () => {
       'content-disposition',
       'attachment; filename="paket-berresource.zip"',
     )
+    // Deploy-stable content: cache like the homepage's SWR window.
+    expect(setHeader).toHaveBeenCalledWith('cache-control', 'public, max-age=3600')
+  })
+
+  it('encodes string asset contents the same as raw bytes', async () => {
+    mockPost(packagedPost)
+    // The production asset driver returns strings, not Uint8Arrays.
+    storage.set('downloads/catatan.md', '# Catatan\nIsi berkas pertama.\n')
+
+    const response = await handler(fakeEvent('paket-berresource'))
+
+    const restored = unzipSync(response as Uint8Array)
+    expect(new TextDecoder().decode(restored['catatan.md'])).toBe('# Catatan\nIsi berkas pertama.\n')
   })
 
   it('404s when the post does not exist', async () => {

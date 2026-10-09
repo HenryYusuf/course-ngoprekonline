@@ -47,6 +47,8 @@ describe('specPlate', () => {
     expect(zip.exists()).toBe(true)
     expect(zip.attributes('download')).toBe('otomasi-excel-python.zip')
     expect(zip.text()).toContain('Unduh semua')
+    // The badge labels the summed source sizes as contents, not archive size.
+    expect(zip.text()).toContain('ZIP · isi 3,6 KB')
   })
 
   it('hides the zip button when only one file ships', async () => {

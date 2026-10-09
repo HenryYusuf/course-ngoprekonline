@@ -20,6 +20,11 @@ const stampLabel = computed(() =>
     ? `Paket terbaru · ${props.categoryLabel ?? 'Tanpa kategori'}`
     : 'Edutorial blog download',
 )
+
+// Blog posts live at `/blog/<slug>`; the zip route is keyed by that slug.
+const slug = computed(() =>
+  props.post?.path.replace(/^\/blog\//, '') || undefined,
+)
 </script>
 
 <template>
@@ -57,6 +62,7 @@ const stampLabel = computed(() =>
         :published-at="post.publishedAt"
         :body="post.body"
         :resources="post.resources"
+        :slug="slug"
       />
     </template>
 

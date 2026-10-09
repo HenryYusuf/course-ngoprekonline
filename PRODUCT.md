@@ -26,9 +26,9 @@ Tutorial Indonesia yang siap dipakai: setiap artikel bukan hanya dibaca, tetapi 
 
 ## Capabilities and Constraints
 
-- Fitur yang sudah ada dan tetap ada: daftar homepage (dengan pagination `?page=N`), `/blog` (dengan pagination `?page=N`), `/blog/[slug]`, arsip tag `/blog/tag/[tag]`, arsip kategori `/blog/category/[category]`, pencarian `/cari`, `/rss.xml`, `/sitemap.xml`, `/robots.txt`.
+- Fitur yang sudah ada dan tetap ada: daftar homepage (dengan pagination `?page=N`), `/blog` (dengan pagination `?page=N`), `/blog/[slug]`, arsip tag `/blog/tag/[tag]`, arsip kategori `/blog/category/[category]`, pencarian `/cari`, `/rss.xml`, `/sitemap.xml`, `/robots.txt`, zip per artikel `/downloads/[slug].zip`.
 - Gate publish di `shared/utils/publishing.ts` (draft & tanggal masa depan tidak tampil) harus dipertahankan.
-- **Unduhan resource per artikel sudah ada**: skema frontmatter `resources` (nama, path, ukuran `bytes`, deskripsi) di `content.config.ts`, UI unduh di `SpecPlate.vue` pada halaman artikel, dan invariant test `content/resources-invariant.test.ts` yang memastikan `bytes` sama dengan ukuran file asli di `public/downloads/`.
+- **Unduhan resource per artikel sudah ada**: skema frontmatter `resources` (judul `title`, berkas `file`, ukuran `bytes`) di `content.config.ts`, UI unduh di `SpecPlate.vue` pada halaman artikel (tautan per berkas, plus "Unduh semua" ZIP bila ≥2 berkas), dan invariant test `content/resources-invariant.test.ts` yang memastikan `bytes` sama dengan ukuran file asli di `public/downloads/`.
 - Satu Category kurasi per post; Tag bebas. Daftar kategori di `content/categories/*.yml`, invariant test menjaga kecocokan slug.
 - Setiap post punya tepat satu Category (tidak bersarang); Tag bebas.
 - Aksesibilitas: navigasi keyboard dan kontras teks wajib terpenuhi; standar spesifik lain belum ditetapkan.

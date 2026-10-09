@@ -33,6 +33,14 @@ const zipHref = computed(() =>
   props.slug && resources.value.length >= 2 ? `/downloads/${props.slug}.zip` : undefined,
 )
 
+// The badge shows the summed source-file sizes, not the archive's final size
+// (compression makes them differ); label it as contents, not download size.
+const zipBadge = computed(() =>
+  resources.value.length >= 2
+    ? `ZIP · isi ${formatBytes(totalBytes.value)}`
+    : undefined,
+)
+
 const rows = computed(() => [
   { label: 'Kategori', value: props.categoryLabel ?? '-' },
   { label: 'Waktu baca', value: `${readingMinutes(props.body)} menit` },
@@ -117,7 +125,7 @@ function fileFormat(file: string): string {
         class="mt-3 flex items-center justify-between gap-3 border border-plate-muted/40 px-3.5 py-2.5 transition-colors hover:border-plate-fg"
       >
         <span class="label-caps text-plate-fg">Unduh semua</span>
-        <span class="label-caps text-plate-muted">ZIP · {{ formatBytes(totalBytes) }}</span>
+        <span class="label-caps text-plate-muted">{{ zipBadge }}</span>
       </a>
     </div>
   </aside>

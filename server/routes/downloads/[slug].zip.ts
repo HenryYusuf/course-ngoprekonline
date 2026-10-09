@@ -50,5 +50,7 @@ export default defineEventHandler(async (event) => {
 
   setResponseHeader(event, 'content-type', 'application/zip')
   setResponseHeader(event, 'content-disposition', `attachment; filename="${slug}.zip"`)
+  // Content only changes at deploy, so cache like the homepage's SWR window.
+  setResponseHeader(event, 'cache-control', 'public, max-age=3600')
   return zip
 })
