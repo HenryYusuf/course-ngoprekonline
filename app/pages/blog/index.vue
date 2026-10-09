@@ -1,16 +1,30 @@
 <script setup lang="ts">
-import { useHead, useRuntimeConfig, useSeoMeta } from '#imports'
+import { computed, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#imports'
 
 import { findCategory } from '#shared/utils/categories'
 
+import PaginationNav from '~/components/PaginationNav.vue'
 import PostCard from '~/components/PostCard.vue'
 import { useCategories } from '~/composables/useCategories'
 import { usePublishedPosts } from '~/composables/usePublishedPosts'
+import { ARCHIVE_PER_PAGE, paginate } from '~/utils/pagination'
 
 const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
+const route = useRoute()
+
 const posts = await usePublishedPosts()
 const categories = await useCategories()
+
+const archive = computed(() =>
+  paginate(posts, Number(route.query.page), ARCHIVE_PER_PAGE),
+)
+
+const canonicalHref = computed(() =>
+  archive.value.page === 1
+    ? `${siteUrl}/blog`
+    : `${siteUrl}/blog?page=${archive.value.page}`,
+)
 
 useSeoMeta({
   title: 'Blog',
@@ -20,7 +34,7 @@ useSeoMeta({
   ogLocale: 'id_ID',
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${siteUrl}/blog` }],
+  link: [{ rel: 'canonical', href: canonicalHref }],
 })
 </script>
 
@@ -31,7 +45,7 @@ useHead({
         Semua Paket
       </h1>
       <p class="mt-3 label-caps text-muted-foreground">
-        {{ posts.length }} paket terbit · urut terbaru dulu
+        {{ archive.total }} paket terbit · halaman {{ archive.page }} dari {{ archive.totalPages }} · urut terbaru dulu
       </p>
     </header>
 
@@ -48,15 +62,21 @@ useHead({
 
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
       <PostCard
-        v-for="post in posts"
+        v-for="post in archive.items"
         :key="post.path"
         :post="post"
         :category="findCategory(categories, post.category ?? '')"
       />
     </div>
 
-    <p v-if="posts.length === 0" class="label-caps text-muted-foreground">
+    <p v-if="archive.total === 0" class="label-caps text-muted-foreground">
       Belum ada paket terbit
     </p>
+
+    <PaginationNav
+      :page="archive.page"
+      :total-pages="archive.totalPages"
+      base-path="/blog"
+    />
   </main>
 </template>

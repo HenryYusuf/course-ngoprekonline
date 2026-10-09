@@ -10,7 +10,7 @@ draft: false
 resources:
   - title: "Daftar perintah Docker penting"
     file: /downloads/perintah-docker-penting.txt
-    bytes: 1944
+    bytes: 1941
 ---
 
 <!-- demo post (spec #12): boleh dihapus massal -->

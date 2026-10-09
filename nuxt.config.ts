@@ -19,6 +19,16 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
+  // Site-wide document head: language of the UI, RSS discovery for feed readers.
+  app: {
+    head: {
+      htmlAttrs: { lang: 'id' },
+      link: [
+        { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/rss.xml' },
+      ],
+    },
+  },
+
   // Tailwind-compatible reset so `border`-style utilities actually render
   // (UnoCSS ships no CSS reset; ddpanda look relies on it) + self-hosted font
   // faces for the ddpanda-style design tokens (issue #12).
@@ -36,8 +46,9 @@ export default defineNuxtConfig({
       // Entry must stay crawlable while `/` itself is excluded (routeRules
       // below): the static layer ignores query strings, so a prerendered
       // index.html would hijack `/?page=N` and always serve page 1 (spec #12).
-      // `/rss.xml` is listed explicitly because the crawler skips .xml links.
-      routes: ['/blog', '/rss.xml'],
+      // `/rss.xml` and `/robots.txt` are listed explicitly because the crawler
+      // skips non-HTML links.
+      routes: ['/blog', '/rss.xml', '/robots.txt'],
       crawlLinks: true,
     },
   },

@@ -67,6 +67,14 @@ describe('blog post page', () => {
     expect(link.text()).toBe('Umum')
   })
 
+  it('links every tag to its archive at the foot of the article', async () => {
+    const wrapper = await mountSuspended(PostPage, { route: '/blog/halo-dunia' })
+
+    const link = wrapper.find('a[href="/blog/tag/umum"]')
+    expect(link.exists()).toBe(true)
+    expect(link.text()).toBe('#umum')
+  })
+
   it('renders nothing for unknown posts (fatal 404 is verified e2e)', async () => {
     // mountSuspended swallows the thrown fatal error in the DOM environment,
     // so the observable contract here is the v-if guard: no article content.
