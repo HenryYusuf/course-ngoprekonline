@@ -114,7 +114,7 @@ describe('package zip (GET /downloads/[slug].zip)', () => {
     await expect(handler(fakeEvent('tanpa-resource'))).rejects.toMatchObject({ statusCode: 404 })
   })
 
-  it('bundles only local resources, leaving external ones out of the archive', async () => {
+  it('gathers only local resources, leaving external ones out of the archive', async () => {
     mockPost({
       ...packagedPost,
       resources: [

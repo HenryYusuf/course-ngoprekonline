@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Resource } from '#shared/utils/resources'
+
 import { computed } from '#imports'
 
 import { formatBytes } from '~/utils/formatBytes'
@@ -13,7 +15,7 @@ const props = defineProps<{
     publishedAt: Date | string
     image?: string
     body?: unknown
-    resources?: { title: string, file: string, bytes?: number }[]
+    resources?: Resource[]
   }
   /**
    * Resolved Category of the post, provided by the page that owns the

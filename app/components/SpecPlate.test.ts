@@ -87,6 +87,25 @@ describe('specPlate', () => {
     expect(wrapper.find('a[href="/downloads/campur.zip"]').text()).toContain('ZIP · isi 3,6 KB')
   })
 
+  it('drops the size claim from the zip badge when a local size is unknown', async () => {
+    const wrapper = await mountSuspended(SpecPlate, {
+      props: {
+        slug: 'campur',
+        resources: [
+          resources[0]!,
+          { title: 'Tanpa ukuran', file: '/downloads/tanpa-ukuran.md' },
+        ],
+      },
+    })
+
+    // Invariant keeps local bytes required, but the badge must never print a
+    // partial sum labelled as the archive's contents.
+    const zip = wrapper.find('a[href="/downloads/campur.zip"]')
+    expect(zip.exists()).toBe(true)
+    expect(zip.text()).toContain('ZIP')
+    expect(zip.text()).not.toContain('isi')
+  })
+
   it('hides the zip button when only one file ships', async () => {
     const wrapper = await mountSuspended(SpecPlate, {
       props: { slug: 'panduan-docker-untuk-pemula', resources: [resources[0]!] },

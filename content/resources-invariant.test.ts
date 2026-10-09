@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-import { isExternalFile } from '../shared/utils/resources'
+import { isExternalFile, isLocalDownload } from '../shared/utils/resources'
 
 // Vitest runs from the project root, so content/ and public/ are stable here.
 const contentDir = join(process.cwd(), 'content')
@@ -42,13 +42,12 @@ describe('content resource size invariant', () => {
       const source = readFileSync(join(contentDir, 'blog', name), 'utf8')
       for (const { file, bytes } of resourcePairs(source)) {
         if (isExternalFile(file)) {
-          // External PPD links are validated by shape only: they expire,
+          // Shape already validated by isExternalFile: PPD links expire,
           // reject HEAD, and are not this repo's files to stat (ADR 0004).
-          expect(file, `${name}: external resource URL`).toMatch(/^https?:\/\//)
           checked++
           continue
         }
-        expect(file, `${name}: resource file path`).toMatch(/^\/downloads\//)
+        expect(isLocalDownload(file), `${name}: resource file path`).toBe(true)
         const realBytes = statSync(join(publicDir, file)).size
         expect(
           bytes,
@@ -64,7 +63,7 @@ describe('content resource size invariant', () => {
 
   it('keeps every post with two or more local resources able to offer the "download all" zip', () => {
     const posts = readdirSync(join(contentDir, 'blog')).filter(name => name.endsWith('.md'))
-    // The zip bundles local files only, so the threshold counts local Resources.
+    // The zip gathers local files only, so the threshold counts local Resources.
     const multiResourcePosts = posts.filter(
       name => resourcePairs(readFileSync(join(contentDir, 'blog', name), 'utf8'))
         .filter(resource => !isExternalFile(resource.file))

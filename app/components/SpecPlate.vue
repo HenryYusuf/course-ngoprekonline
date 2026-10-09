@@ -1,23 +1,18 @@
 <script setup lang="ts">
-import { computed } from '#imports'
+import type { Resource } from '#shared/utils/resources'
 
+import { computed } from '#imports'
 import { isExternalFile } from '#shared/utils/resources'
 
 import { formatBytes } from '~/utils/formatBytes'
 import { formatDate } from '~/utils/formatDate'
 import { readingMinutes } from '~/utils/readingMinutes'
 
-interface PackageResource {
-  title: string
-  file: string
-  bytes?: number
-}
-
 const props = defineProps<{
   categoryLabel?: string
   publishedAt?: Date | string
   body?: unknown
-  resources?: PackageResource[]
+  resources?: Resource[]
   /** Post slug, used to link the "download all" zip route. */
   slug?: string
   id?: string
@@ -34,29 +29,37 @@ const rows = computed(() => resources.value.map(resource => ({
   fileName: resource.file.split('/').pop() ?? resource.file,
 })))
 
-// Only the repo's own files can be bundled; external resources stay a
-// redirect the ZIP cannot gather.
+// Only the repo's own files can be gathered; external resources stay a
+// redirect the ZIP cannot reach.
 const localRows = computed(() => rows.value.filter(row => !row.external))
 
 // A total is only honest when every row declares a size; an external resource
 // may omit `bytes`, and a partial sum would mislabel itself as the package size.
+const allSizesKnown = computed(() => rows.value.every(row => row.bytes !== undefined))
+
 const size = computed(() =>
   rows.value.length === 0
     ? '0 B'
-    : rows.value.every(row => row.bytes !== undefined)
+    : allSizesKnown.value
       ? formatBytes(rows.value.reduce((sum, row) => sum + (row.bytes ?? 0), 0))
       : '-',
 )
 
-// The ZIP gathers local files only, so its badge sums just those.
-const zipBadge = computed(() =>
-  localRows.value.length >= 2
-    ? `ZIP · isi ${formatBytes(localRows.value.reduce((sum, row) => sum + (row.bytes ?? 0), 0))}`
-    : undefined,
-)
+// The ZIP gathers local files only, so its badge sums just those, and only
+// when every local size is known (ADR 0004 keeps local bytes required).
+const zipBadge = computed(() => {
+  if (localRows.value.length < 2) {
+    return undefined
+  }
+  if (!localRows.value.every(row => row.bytes !== undefined)) {
+    return 'ZIP'
+  }
+  const localTotal = localRows.value.reduce((sum, row) => sum + (row.bytes ?? 0), 0)
+  return `ZIP · isi ${formatBytes(localTotal)}`
+})
 
 // A single-file "zip" adds nothing over the direct link; only offer the
-// bundle when there is genuinely more than one local file to gather.
+// zip when there is genuinely more than one local file to gather.
 const zipHref = computed(() =>
   props.slug && localRows.value.length >= 2 ? `/downloads/${props.slug}.zip` : undefined,
 )
@@ -69,9 +72,11 @@ const specs = computed(() => [
   { label: 'Ukuran', value: size.value },
 ])
 
+// External PPD URLs may carry query/hash tokens; strip them before reading
+// the extension. Local paths behave exactly as before.
 function fileFormat(file: string): string {
   const ext = file.split('?')[0]?.split('#')[0]?.split('.').pop()
-  return ext && ext !== file ? ext.toUpperCase() : 'BERKAS'
+  return ext ? ext.toUpperCase() : 'BERKAS'
 }
 </script>
 
@@ -84,16 +89,16 @@ function fileFormat(file: string): string {
 
     <dl class="px-5 pb-2 pt-1">
       <div
-        v-for="(row, i) in specs"
-        :key="row.label"
+        v-for="(spec, i) in specs"
+        :key="spec.label"
         class="spec-row animate-[plate-row-in_560ms_both]"
         :style="{ animationDelay: `${i * 55}ms` }"
       >
         <dt class="label-caps text-plate-muted">
-          {{ row.label }}
+          {{ spec.label }}
         </dt>
         <dd class="text-right text-[13px] text-plate-fg font-medium tabular-nums">
-          {{ row.value }}
+          {{ spec.value }}
         </dd>
       </div>
     </dl>

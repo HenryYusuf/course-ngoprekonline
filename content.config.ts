@@ -1,6 +1,6 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
-import { isExternalFile } from './shared/utils/resources'
+import { isExternalFile, isLocalDownload } from './shared/utils/resources'
 
 export default defineContentConfig({
   collections: {
@@ -33,7 +33,7 @@ export default defineContentConfig({
         resources: z.array(z.object({
           title: z.string(),
           file: z.string().refine(
-            value => isExternalFile(value) || /^\/downloads\//.test(value),
+            value => isExternalFile(value) || isLocalDownload(value),
             { message: 'resource file must be a /downloads/ path or an absolute http(s) URL (ADR 0004)' },
           ),
           // Required for local files, whose declared size must match the real

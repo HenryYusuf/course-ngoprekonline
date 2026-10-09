@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
   const allResources: { file: string }[] = post.resources ?? []
   // Only the repo's own files can be gathered into an archive; external
-  // resources are a redirect to a PPD host and are not ours to bundle (ADR 0004).
+  // resources are a redirect to a PPD host and are not ours to reach (ADR 0004).
   const resources = allResources.filter(resource => !isExternalFile(resource.file))
   if (resources.length === 0) {
     throw createError({ statusCode: 404, statusMessage: 'Paket tidak memiliki berkas unduhan' })
