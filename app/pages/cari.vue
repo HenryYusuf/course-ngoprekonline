@@ -1,19 +1,73 @@
 <script setup lang="ts">
-import { ref, useHead, useRoute, useRuntimeConfig, useSeoMeta, watch } from '#imports'
+import { computed, ref, useHead, useRoute, useRouter, useRuntimeConfig, useSeoMeta, watch } from '#imports'
 
 import { useBlogSearch } from '~/composables/useBlogSearch'
 
 const route = useRoute()
+const router = useRouter()
 const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
-const query = ref(typeof route.query.q === 'string' ? route.query.q : '')
+function readRouteQ(): string {
+  return typeof route.query.q === 'string' ? route.query.q : ''
+}
+
+const query = ref(readRouteQ())
 const { status, search } = await useBlogSearch()
 const results = ref<Awaited<ReturnType<typeof search>>>([])
 const pending = ref(false)
 const failed = ref(false)
+const DEBOUNCE_MS = 250
 let sequence = 0
+let timer: ReturnType<typeof setTimeout> | undefined
 
-watch([query, () => status.value], async () => {
+const selectedIndex = ref(-1)
+
+const activeId = computed(() => {
+  if (selectedIndex.value >= 0 && selectedIndex.value < results.value.length) {
+    return `cari-hasil-${selectedIndex.value}`
+  }
+  return undefined
+})
+
+const listOpen = computed(() =>
+  status.value === 'ready'
+  && !!query.value.trim()
+  && !pending.value
+  && !failed.value
+  && results.value.length > 0,
+)
+
+function onKeydown(event: KeyboardEvent): void {
+  if (event.key === 'ArrowDown' && results.value.length > 0) {
+    event.preventDefault()
+    selectedIndex.value = Math.min(selectedIndex.value + 1, results.value.length - 1)
+  }
+  else if (event.key === 'ArrowUp') {
+    event.preventDefault()
+    selectedIndex.value = Math.max(selectedIndex.value - 1, -1)
+  }
+  else if (event.key === 'Enter') {
+    const selected = results.value[selectedIndex.value]
+    if (selected) {
+      event.preventDefault()
+      void router.push(selected.path)
+    }
+  }
+  else if (event.key === 'Escape') {
+    event.preventDefault()
+    query.value = ''
+    selectedIndex.value = -1
+  }
+}
+
+function syncUrl(): void {
+  const trimmed = query.value.trim()
+  if (trimmed !== readRouteQ()) {
+    void router.replace({ query: { ...route.query, q: trimmed || undefined } })
+  }
+}
+
+async function executeSearch(): Promise<void> {
   if (status.value !== 'ready') {
     return
   }
@@ -43,6 +97,18 @@ watch([query, () => status.value], async () => {
       pending.value = false
     }
   }
+}
+
+watch([query, () => status.value], () => {
+  selectedIndex.value = -1
+  if (timer !== undefined) {
+    clearTimeout(timer)
+  }
+  timer = setTimeout(() => {
+    timer = undefined
+    syncUrl()
+    void executeSearch()
+  }, DEBOUNCE_MS)
 }, { immediate: true })
 
 useSeoMeta({
@@ -79,6 +145,12 @@ useHead({
         class="mt-2 w-full border border-foreground/25 bg-background px-3 py-2.5 text-base"
         placeholder="Ketik kata kunci…"
         autocomplete="off"
+        role="combobox"
+        :aria-expanded="listOpen ? 'true' : 'false'"
+        :aria-controls="listOpen ? 'cari-hasil' : undefined"
+        :aria-activedescendant="activeId"
+        :aria-busy="status !== 'ready' || pending ? 'true' : 'false'"
+        @keydown="onKeydown"
       >
     </div>
 
@@ -98,13 +170,17 @@ useHead({
       Tidak ada hasil untuk “{{ query.trim() }}”.
     </p>
 
-    <ul v-else class="mt-6 flex flex-col gap-4">
+    <ul v-else id="cari-hasil" role="listbox" class="mt-6 flex flex-col gap-4">
       <li
-        v-for="result in results"
+        v-for="(result, index) in results"
+        :id="`cari-hasil-${index}`"
         :key="result.path"
+        role="option"
+        :aria-selected="selectedIndex === index ? 'true' : 'false'"
         class="border border-border p-4 transition-colors hover:border-foreground"
+        :class="{ 'border-foreground bg-foreground text-background': selectedIndex === index }"
       >
-        <NuxtLink :to="result.path" class="block">
+        <NuxtLink :to="result.path" tabindex="-1" class="block">
           <span class="block text-lg font-bold tracking-[-0.01em]">{{ result.title }}</span>
           <span class="mt-1 block text-sm text-muted-foreground" v-html="result.snippet" />
         </NuxtLink>
