@@ -28,6 +28,10 @@ _Avoid_: Deploy, release
 A downloadable file attached to a Blog Post (template, cheat sheet, code, asset). Lives in the repository's public downloads area; its declared size must match the real file.
 _Avoid_: Attachment, asset, file package
 
+**Paket**:
+The site's packaging of a Blog Post: its article plus every attached Resource, presented as one downloadable unit. Shown as the Spec Plate on the article page and, when a post ships two or more Resources, a single on-demand ZIP ("Unduh semua") at `/downloads/<post-slug>.zip`.
+_Avoid_: article package, bundle, archive
+
 **Content Management**:
 The authoring workflow for blog content. Content is owned by the repository rather than a database: it is written as files, edited directly or through a self-hosted visual editor, and published as part of a deployment.
 _Avoid_: CMS, admin panel, back office

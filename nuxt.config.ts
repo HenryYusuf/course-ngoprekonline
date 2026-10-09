@@ -1,7 +1,13 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import process from 'node:process'
+import { fileURLToPath } from 'node:url'
 
+// https://nuxt.com/docs/api/configuration/nuxt-config
 const siteUrl = process.env.NUXT_PUBLIC_SITE_URL ?? 'https://ngoprekonline.example'
+
+// Nitro resolves `serverAssets[].dir` relative to `srcDir` (which is `app/`
+// in Nuxt 4), so an absolute path is required to mount the repo-root
+// `public/downloads` folder the resource files live in.
+const downloadsDir = fileURLToPath(new URL('./public/downloads', import.meta.url))
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -49,6 +55,12 @@ export default defineNuxtConfig({
 
   nitro: {
     imports: false,
+    // Expose the download files to server routes via `useStorage('assets')`
+    // so `/downloads/[slug].zip` can assemble an archive from the same files the
+    // per-file links already serve (no separate copy to drift out of sync).
+    serverAssets: [
+      { baseName: 'downloads', dir: downloadsDir },
+    ],
     prerender: {
       // Entry must stay crawlable while `/` itself is excluded (routeRules
       // below): the static layer ignores query strings, so a prerendered

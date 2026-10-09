@@ -16,6 +16,8 @@ const props = defineProps<{
   publishedAt?: Date | string
   body?: unknown
   resources?: PackageResource[]
+  /** Post slug, used to link the "download all" zip route. */
+  slug?: string
   id?: string
 }>()
 
@@ -23,6 +25,20 @@ const resources = computed(() => props.resources ?? [])
 
 const totalBytes = computed(() =>
   resources.value.reduce((sum, resource) => sum + resource.bytes, 0),
+)
+
+// A single-file "zip" adds nothing over the direct link; only offer the
+// bundle when there is genuinely more than one file to gather.
+const zipHref = computed(() =>
+  props.slug && resources.value.length >= 2 ? `/downloads/${props.slug}.zip` : undefined,
+)
+
+// The badge shows the summed source-file sizes, not the archive's final size
+// (compression makes them differ); label it as contents, not download size.
+const zipBadge = computed(() =>
+  resources.value.length >= 2
+    ? `ZIP · isi ${formatBytes(totalBytes.value)}`
+    : undefined,
 )
 
 const rows = computed(() => [
@@ -101,6 +117,16 @@ function fileFormat(file: string): string {
         Paket ini belum menyertakan berkas unduhan. Baca artikelnya dulu;
         file menyusul kalau materinya memang butuh pendamping.
       </p>
+
+      <a
+        v-if="zipHref"
+        :href="zipHref"
+        :download="`${slug}.zip`"
+        class="mt-3 flex items-center justify-between gap-3 border border-plate-muted/40 px-3.5 py-2.5 transition-colors hover:border-plate-fg"
+      >
+        <span class="label-caps text-plate-fg">Unduh semua</span>
+        <span class="label-caps text-plate-muted">{{ zipBadge }}</span>
+      </a>
     </div>
   </aside>
 </template>

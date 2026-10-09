@@ -21,6 +21,7 @@
     "@nuxt/content": "catalog:prod",
     "@nuxtjs/sitemap": "catalog:prod",
     "better-sqlite3": "catalog:prod",
+    "fflate": "catalog:prod",
     "nuxt": "catalog:prod",
     "nuxt-studio": "catalog:prod",
     "vue": "catalog:frontend"

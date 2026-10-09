@@ -42,7 +42,19 @@ describe('content resource size invariant', () => {
         checked++
       }
     }
-    // At least the known packages ship today; more posts may add resources later.
-    expect(checked).toBeGreaterThanOrEqual(3)
+    // Every packaged post currently ships at least one file; this floor
+    // guards against a mass-edit silently emptying the download library.
+    expect(checked).toBeGreaterThanOrEqual(11)
+  })
+
+  it('keeps every multi-resource post able to offer the "download all" zip', () => {
+    const posts = readdirSync(join(contentDir, 'blog')).filter(name => name.endsWith('.md'))
+    const multiResourcePosts = posts.filter(
+      name => resourcePairs(readFileSync(join(contentDir, 'blog', name), 'utf8')).length >= 2,
+    )
+
+    // The zip route only adds value once several files ship together, so at
+    // least one post must exercise it and stay covered by the SpecPlate button.
+    expect(multiResourcePosts.length).toBeGreaterThanOrEqual(2)
   })
 })

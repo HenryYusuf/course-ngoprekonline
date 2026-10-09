@@ -3,6 +3,13 @@ title: "SQL untuk Analis: Query yang Sering Dipakai Kerja"
 description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: sql untuk analis."
 category: tutorial
 publishedAt: 2026-08-17
+resources:
+  - title: "Cheat sheet: query SQL untuk analis"
+    file: /downloads/cheat-sheet-sql-untuk-analis.md
+    bytes: 2251
+  - title: Starter dataset untuk latihan SQL
+    file: /downloads/starter-data-sql-untuk-analis.sql
+    bytes: 1162
 tags:
   - sql
   - data

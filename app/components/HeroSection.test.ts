@@ -52,6 +52,12 @@ describe('heroSection', () => {
     const download = wrapper.find('a[href="/downloads/cheat-sheet-otomasi-excel-python.md"]')
     expect(download.exists()).toBe(true)
     expect(download.attributes('download')).toBe('cheat-sheet-otomasi-excel-python.md')
+
+    // The featured post ships two files, so the homepage plate offers the zip too.
+    const zip = wrapper.find('a[href="/downloads/otomasi-excel-python.zip"]')
+    expect(zip.exists()).toBe(true)
+    expect(zip.text()).toContain('Unduh semua')
+    expect(zip.text()).toContain('ZIP · isi 3,6 KB')
   })
 
   it('states an honest empty package when the featured post ships no files', async () => {

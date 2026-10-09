@@ -3,6 +3,13 @@ title: Otomasi Laporan Mingguan dengan Google Sheets
 description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: otomasi laporan mingguan dengan google sheets."
 category: tutorial
 publishedAt: 2026-05-22
+resources:
+  - title: "Rumus Google Sheets untuk laporan mingguan"
+    file: /downloads/rumus-laporan-google-sheets.md
+    bytes: 1410
+  - title: Template Apps Script laporan (.gs)
+    file: /downloads/template-apps-script-laporan.gs
+    bytes: 1707
 tags:
   - otomasi
   - sheets
