@@ -226,7 +226,7 @@ Siluet berulang: **kotak oranye kecil** (8px di stempel & panel, 10px di kepala 
 
 ## Components
 
-Bahasa kontrol: tombol = label stensil, chip = stempel, input = (tidak ada form di situs ini), kartu = paket bersampul + strip spesifikasi di kaki, plat = label hitam belakang kemasan.
+Bahasa kontrol: tombol = label stensil, chip = stempel, input = kotak pencarian (satu-satunya form di situs ini), kartu = paket bersampul + strip spesifikasi di kaki, plat = label hitam belakang kemasan.
 
 ### Utility Strip (strip utilitas)
 - **Shape:** full-bleed, tinggi 32px, border-b ink.
@@ -237,6 +237,7 @@ Bahasa kontrol: tombol = label stensil, chip = stempel, input = (tidak ada form 
 - **Shape:** sticky `top-0`, `z-40`, border-b `rgba(23,24,28,0.15)`, latar `background/95` + `backdrop-blur-sm`, kontainer `max-w-6xl`, padding vertikal 14px.
 - **Wordmark:** kotak oranye 14px berbingkai ink (rotate 45° saat hover, 300ms) + `Ngoprek.Online` Archivo 800 `17px` tracking −0.02em.
 - **Nav:** mono-label `muted-foreground` → `foreground` saat hover; item: `Blog`, `RSS`, per kategori (≥`sm`).
+- **Pencarian:** form `role=search` terlihat di kedua breakpoint: input `type=search` (`Kata kunci…`, `name=q`) + tombol `Cari` compact (`px-3 py-1.5`, border ink, hover balik ink/bone); submit → `/cari` membawa `?q=` (SPA `router.push`, fallback native `action="/cari"`).
 
 ### Buttons
 - **Shape:** radius 0, border 1px ink, padding `12px 20px`, inline-flex gap 8px, mono-label teks.

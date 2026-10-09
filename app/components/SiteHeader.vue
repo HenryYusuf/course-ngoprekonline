@@ -1,7 +1,16 @@
 <script setup lang="ts">
+import { ref, useRouter } from '#imports'
+
 import { useCategories } from '~/composables/useCategories'
 
 const categories = await useCategories()
+const router = useRouter()
+const searchQuery = ref('')
+
+function onSearch(): void {
+  const q = searchQuery.value.trim()
+  void router.push(q ? { path: '/cari', query: { q } } : { path: '/cari' })
+}
 </script>
 
 <template>
@@ -38,6 +47,24 @@ const categories = await useCategories()
         >
           {{ category.label }}
         </NuxtLink>
+        <form role="search" action="/cari" method="get" class="flex shrink-0 items-center gap-2" @submit.prevent="onSearch">
+          <label for="header-cari-input" class="sr-only">Kata kunci</label>
+          <input
+            id="header-cari-input"
+            v-model="searchQuery"
+            type="search"
+            name="q"
+            placeholder="Kata kunci…"
+            autocomplete="off"
+            class="w-28 border border-foreground/25 bg-background px-2 py-1.5 text-sm sm:w-40"
+          >
+          <button
+            type="submit"
+            class="border border-foreground bg-transparent px-3 py-1.5 label-caps transition-colors hover:bg-foreground hover:text-background"
+          >
+            Cari
+          </button>
+        </form>
       </nav>
     </div>
   </header>
