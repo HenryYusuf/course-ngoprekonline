@@ -9,8 +9,8 @@ const featuredPost = {
   description: 'Hentikan kerja manual di spreadsheet.',
   publishedAt: new Date('2026-10-06'),
   resources: [
-    { title: 'Cheat sheet', file: '/downloads/cheat-sheet-otomasi-excel-python.md', bytes: 2067 },
-    { title: 'Template script', file: '/downloads/template-script-otomasi-excel.py', bytes: 1621 },
+    { title: 'Cheat sheet', file: '/downloads/cheat-sheet-otomasi-excel-python.md', bytes: 2069 },
+    { title: 'Template script', file: '/downloads/template-script-otomasi-excel.py', bytes: 1618 },
   ],
 }
 
@@ -46,7 +46,7 @@ describe('heroSection', () => {
     expect(html).toContain('Tutorial')
     expect(html).toContain('6 Oktober 2026')
     expect(html).toContain('2 berkas')
-    // 2067 + 1621 bytes, formatted with the Indonesian decimal comma
+    // 2069 + 1618 bytes, formatted with the Indonesian decimal comma
     expect(html).toContain('3,6 KB')
 
     const download = wrapper.find('a[href="/downloads/cheat-sheet-otomasi-excel-python.md"]')

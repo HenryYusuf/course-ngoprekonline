@@ -24,6 +24,10 @@ _Avoid_: Unpublished post, WIP
 To make a Blog Post visible on the public site. Publishing is a content decision, not a deployment.
 _Avoid_: Deploy, release
 
+**Resource**:
+A downloadable file attached to a Blog Post (template, cheat sheet, code, asset). Lives in the repository's public downloads area; its declared size must match the real file.
+_Avoid_: Attachment, asset, file package
+
 **Content Management**:
 The authoring workflow for blog content. Content is owned by the repository rather than a database: it is written as files, edited directly or through a self-hosted visual editor, and published as part of a deployment.
 _Avoid_: CMS, admin panel, back office

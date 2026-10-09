@@ -1,0 +1,3 @@
+# Download artifacts are size-checked against frontmatter `bytes` (spec plates
+# must not lie). Never rewrite their line endings on checkout.
+public/downloads/** -text

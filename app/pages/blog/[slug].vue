@@ -84,6 +84,25 @@ useHead({
       <div class="mt-10">
         <ContentRenderer :value="post" class="prose" />
       </div>
+
+      <footer
+        v-if="post.tags && post.tags.length > 0"
+        class="mt-12 border-t border-border pt-6"
+      >
+        <h2 class="label-caps text-muted-foreground">
+          Tag
+        </h2>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          <li v-for="tag in post.tags" :key="tag">
+            <NuxtLink
+              :to="`/blog/tag/${tag}`"
+              class="inline-block border border-foreground/20 px-1.5 py-0.5 label-caps text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+            >
+              #{{ tag }}
+            </NuxtLink>
+          </li>
+        </ul>
+      </footer>
     </article>
   </main>
 </template>

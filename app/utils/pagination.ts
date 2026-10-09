@@ -6,6 +6,9 @@ export interface Paginated<T> {
   totalPages: number
 }
 
+/** Cards per archive page on the homepage and /blog. */
+export const ARCHIVE_PER_PAGE = 24
+
 /**
  * Slice `items` into the requested `page` (1-based), clamping out-of-range
  * pages instead of throwing: garbage query params must degrade to a valid

@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest'
 import SpecPlate from './SpecPlate.vue'
 
 const resources = [
-  { title: 'Cheat sheet', file: '/downloads/cheat-sheet-otomasi-excel-python.md', bytes: 2067 },
-  { title: 'Template script', file: '/downloads/template-script-otomasi-excel.py', bytes: 1621 },
+  { title: 'Cheat sheet', file: '/downloads/cheat-sheet-otomasi-excel-python.md', bytes: 2069 },
+  { title: 'Template script', file: '/downloads/template-script-otomasi-excel.py', bytes: 1618 },
 ]
 
 describe('specPlate', () => {
