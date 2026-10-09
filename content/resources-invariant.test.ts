@@ -14,9 +14,11 @@ interface ResourcePair {
 /**
  * Extract `file:` / `bytes:` pairs from the nested `resources:` frontmatter list.
  * Frontmatter in this repo always lists `file` then `bytes` per item.
+ * Newlines are normalized so CRLF checkouts (Windows CI) parse the same as LF.
  */
 function resourcePairs(source: string): ResourcePair[] {
-  const block = source.match(/resources:\n([\s\S]*?)(?=\n\S|$)/)?.[1] ?? ''
+  const text = source.replace(/\r\n/g, '\n')
+  const block = text.match(/resources:\n([\s\S]*?)(?=\n\S|$)/)?.[1] ?? ''
   const files = [...block.matchAll(/file:\s*(\S+)/g)].map(match => match[1])
   const sizes = [...block.matchAll(/bytes:\s*(\d+)/g)].map(match => Number(match[1]))
   return files.map((file, index) => ({ file, bytes: sizes[index]! }))
