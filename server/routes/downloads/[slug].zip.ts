@@ -4,6 +4,7 @@ import { useStorage } from 'nitropack/runtime'
 
 import { buildPackageZip } from '#shared/utils/packageZip'
 import { isPublished } from '#shared/utils/publishing'
+import { isExternalFile } from '#shared/utils/resources'
 
 /**
  * Stream every resource file of a post as a single ZIP. Content only changes
@@ -25,7 +26,10 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 404, statusMessage: 'Paket tidak ditemukan' })
   }
 
-  const resources: { file: string }[] = post.resources ?? []
+  const allResources: { file: string }[] = post.resources ?? []
+  // Only the repo's own files can be gathered into an archive; external
+  // resources are a redirect to a PPD host and are not ours to reach (ADR 0004).
+  const resources = allResources.filter(resource => !isExternalFile(resource.file))
   if (resources.length === 0) {
     throw createError({ statusCode: 404, statusMessage: 'Paket tidak memiliki berkas unduhan' })
   }

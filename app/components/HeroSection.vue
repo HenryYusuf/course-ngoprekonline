@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Resource } from '#shared/utils/resources'
+
 import { computed } from '#imports'
 
 import SpecPlate from '~/components/SpecPlate.vue'
@@ -10,7 +12,7 @@ const props = defineProps<{
     description: string
     publishedAt: Date | string
     body?: unknown
-    resources?: { title: string, file: string, bytes: number }[]
+    resources?: Resource[]
   }
   categoryLabel?: string
 }>()

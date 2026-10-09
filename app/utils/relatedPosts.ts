@@ -1,3 +1,5 @@
+import type { Resource } from '#shared/utils/resources'
+
 export interface RelatedPostInput {
   path: string
   title: string
@@ -10,7 +12,7 @@ export interface RelatedPostInput {
    */
   tags?: string[]
   body?: unknown
-  resources?: { title: string, file: string, bytes: number }[]
+  resources?: Resource[]
 }
 
 /**

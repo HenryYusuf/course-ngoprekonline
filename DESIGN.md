@@ -251,16 +251,16 @@ Bahasa kontrol: tombol = label stensil, chip = stempel, input = kotak pencarian 
 
 ### Spec Plate (plat spesifikasi, signature)
 - **Shape:** border 1px ink, latar `plate`, teks `plate-fg`; kepala `SPESIFIKASI PAKET` + kotak oranye 10px, dipisah hairline `plate-muted/40`.
-- **Rows:** lima baris fakta (`KATEGORI / WAKTU BACA / TERBIT / FILE / UKURAN`): dt mono-label `plate-muted`, dd `13px` medium tabular rata kanan, dipisah `border-t plate-muted/25`, tanpa border di baris pertama.
+- **Rows:** lima baris fakta (`KATEGORI / WAKTU BACA / TERBIT / FILE / UKURAN`): dt mono-label `plate-muted`, dd `13px` medium tabular rata kanan, dipisah `border-t plate-muted/25`, tanpa border di baris pertama. `UKURAN` menampilkan total hanya bila semua resource menyatakan `bytes`; jika ada yang tanpa ukuran, nilainya `-` (tidak pernah total parsial).
 - **Motion:** baris masuk berurutan `plate-row-in 560ms both`, jeda 55ms per baris, easing `cubic-bezier(0.16, 1, 0.3, 1)` (translasi 6px ke atas).
-- **Isi Unduhan:** daftar tautan unduh: judul file + `FORMAT · UKURAN` mono-label, panah unduhan oranye (16px) yang turun 2px saat hover; pemisah `divide plate-muted/25`.
+- **Isi Unduhan:** daftar tautan unduh: judul file + `FORMAT · UKURAN` mono-label (ukuran ditampilkan hanya bila diketahui), panah unduhan oranye (16px) yang turun 2px saat hover; pemisah `divide plate-muted/25`. Resource eksternal (link PPD, ADR 0004) memakai ikon panah keluar-oranye (16px, hover geser kanan-atas), membuka tab baru tanpa atribut `download`, dan mengganti sr-only `Unduh` menjadi `Buka di situs lain`.
 - **Empty state (jujur):** `Paket ini belum menyertakan berkas unduhan…`: pesan teks `plate-muted`, tidak ada tombol yang berpura-pura ada file.
 
 ### Post Card (kartu paket)
 - **Shape:** border 1px `rgba(23,24,28,0.20)` → ink penuh saat hover (200ms), latar `card`; seluruh kartu adalah **satu** anchor (chip kategori dirender sebagai teks, bukan link).
 - **Cover 16:10:** gambar asli (lazy, zoom `scale 1.03` / 500ms saat hover) ATAU fallback monogram: inisial Archivo 800 `60px` warna `foreground/15` + barcode SVG deterministik dari hash slug (`foreground/35`, 26 bar, lebar 1–3px). Tidak ada gambar dari dunia lain.
 - **Body (padding 20px):** meta mono-label (tanggal + chip kategori), judul Title (hover → `#C23A0A`), deskripsi 3 baris muted.
-- **Footer strip:** `border-t #DEDDD7`, padding `14px 20px`. Kiri: `N menit baca · N file · ukuran` (mono-label, dihitung dari frontmatter `resources`); kanan: `BACA` + panah `#C23A0A` (geser 4px saat hover, 300ms).
+- **Footer strip:** `border-t #DEDDD7`, padding `14px 20px`. Kiri: `N menit baca · N file · ukuran` (mono-label, dihitung dari frontmatter `resources`); bila ada resource tanpa `bytes`, ukuran opsi kedua hilang dan hanya jumlah file yang tampil (tidak pernah total parsial); kanan: `BACA` + panah `#C23A0A` (geser 4px saat hover, 300ms).
 
 ### Category Panels (Rak Arsip)
 - **Shape:** border 1px `rgba(23,24,28,0.20)`, latar `card`; kepala `RAK · {KATEGORI}` mono-label di atas `surface-low` dengan hairline bawah + kotak oranye 8px.
