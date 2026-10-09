@@ -122,6 +122,9 @@ catalogs:
     '@vue/test-utils':
       specifier: ^2.5.1
       version: 2.5.1
+    axe-core:
+      specifier: ^4.14.0
+      version: 4.14.0
     eslint:
       specifier: ^10.12.0
       version: 10.12.0
@@ -244,6 +247,9 @@ importers:
       '@vue/test-utils':
         specifier: catalog:dev
         version: 2.5.1(@vue/compiler-dom@3.5.43)(@vue/server-renderer@3.5.43)(vue@3.5.43(typescript@5.9.3))
+      axe-core:
+        specifier: catalog:dev
+        version: 4.14.0
       eslint:
         specifier: catalog:dev
         version: 10.12.0(jiti@2.7.0)(supports-color@10.2.2)
@@ -2849,6 +2855,10 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
+
+  axe-core@4.14.0:
+    resolution: {integrity: sha512-9WTZxEjsZ7b13TH8JPmbV2z8CHbl80/2hm3XPEG4JgNdQLK81IBRXmSxHfMAOkSqQeRxT/0dwNDz2GOm3zzpcQ==}
+    engines: {node: '>=4'}
 
   b4a@1.9.0:
     resolution: {integrity: sha512-dpfcF9fDNR6++cthXR67iyhgqWy9CBouAvIWhIntzBG6cvK/cnIPiZQjBwi/ZqjjBEDGfoNDtmB0kTjroOJ3pQ==}
@@ -9716,6 +9726,8 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.1.0
+
+  axe-core@4.14.0: {}
 
   b4a@1.9.0: {}
 

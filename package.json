@@ -35,6 +35,7 @@
     "@unocss/preset-typography": "catalog:frontend",
     "@unocss/reset": "catalog:frontend",
     "@vue/test-utils": "catalog:dev",
+    "axe-core": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-plugin-slop": "catalog:dev",
     "eslint-plugin-sonarjs": "catalog:dev",
