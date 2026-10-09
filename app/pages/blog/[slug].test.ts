@@ -33,6 +33,24 @@ vi.mock('~/composables/usePublishedPosts', () => ({
     }
     return null
   }),
+  usePublishedPosts: vi.fn(async () => [
+    {
+      path: '/blog/halo-dunia',
+      title: 'Halo Dunia',
+      description: 'Post pertama.',
+      publishedAt: new Date('2026-09-20'),
+      category: 'umum',
+      tags: ['umum'],
+    },
+    {
+      path: '/blog/program-kedua',
+      title: 'Program Kedua',
+      description: 'Post terkait lewat kategori.',
+      publishedAt: new Date('2026-08-15'),
+      category: 'umum',
+      tags: [],
+    },
+  ]),
 }))
 
 describe('blog post page', () => {
@@ -81,5 +99,14 @@ describe('blog post page', () => {
     // The HTTP-level 404 is asserted by the build-and-serve verification.
     const wrapper = await mountSuspended(PostPage, { route: '/blog/tidak-ada' })
     expect(wrapper.html()).not.toContain('<article')
+  })
+
+  it('shows related posts that share the category but not the current one', async () => {
+    const wrapper = await mountSuspended(PostPage, { route: '/blog/halo-dunia' })
+
+    const related = wrapper.find('section')
+    expect(related.text()).toContain('Paket Terkait')
+    expect(related.text()).toContain('Program Kedua')
+    expect(related.find('a[href="/blog/program-kedua"]').exists()).toBe(true)
   })
 })

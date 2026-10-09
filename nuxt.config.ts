@@ -14,6 +14,13 @@ export default defineNuxtConfig({
     'nuxt-studio',
   ],
 
+  // Content only changes at deploy time, so the sitemap can be fully
+  // resolved at build (official module recommendation; trims the server
+  // bundle and the per-request dynamic-source scan).
+  sitemap: {
+    zeroRuntime: true,
+  },
+
   // Prefer explicit imports; framework helpers come from `#imports`
   imports: {
     autoImport: false,
@@ -54,7 +61,11 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: false },
+    // Not prerendered: the static layer ignores query strings, so a
+    // prerendered `/` would hijack `/?page=N` (spec #12). Cached instead:
+    // content only changes at deploy, so an hour of SWR absorbs traffic
+    // bursts without serving stale data after a redeploy.
+    '/': { prerender: false, swr: 3600 },
   },
 
   runtimeConfig: {

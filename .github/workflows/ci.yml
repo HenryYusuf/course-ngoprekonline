@@ -13,3 +13,67 @@ jobs:
     uses: sxzz/workflows/.github/workflows/unit-test.yml@main
     permissions:
       contents: read
+
+  # Closes the "build-and-serve verification" gap flagged by the feature
+  # survey (E2): unit tests mount components in a DOM harness and never hit
+  # a real HTTP server. This job builds the production bundle, boots the
+  # Nitro server, and asserts the public routes actually respond.
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+        env:
+          NUXT_PUBLIC_SITE_URL: https://course.ngoprekonline.com
+
+      - name: Start server
+        run: |
+          node .output/server/index.mjs &
+          echo $! > /tmp/server.pid
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3000/robots.txt > /dev/null && exit 0
+            sleep 1
+          done
+          echo "Server did not become ready" >&2
+          exit 1
+
+      - name: Assert routes respond
+        run: |
+          set -euo pipefail
+          assert() {
+            local path="$1" expected_status="$2" needle="${3:-}"
+            local status body
+            body=$(curl -s -o /tmp/body -w "%{http_code}" "http://localhost:3000${path}")
+            status="$body"
+            echo "GET ${path} -> ${status}"
+            test "$status" = "$expected_status"
+            if [ -n "$needle" ]; then
+              grep -q "$needle" /tmp/body || { echo "missing '$needle' in ${path}" >&2; exit 1; }
+            fi
+          }
+          assert / 200 "Ngoprek"
+          assert /blog 200 "Paket"
+          assert /blog/halo-dunia 200 "Halo Dunia"
+          assert /blog/tag/umum 200
+          assert /blog/category/umum 200
+          assert /cari 200
+          assert /rss.xml 200 "<rss"
+          assert /sitemap.xml 200 "<urlset"
+          assert /robots.txt 200 "Sitemap"
+          assert /blog/tidak-ada-sama-sekali 404
+
+      - name: Stop server
+        if: always()
+        run: kill "$(cat /tmp/server.pid)" 2>/dev/null || true
