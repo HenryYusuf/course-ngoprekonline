@@ -62,4 +62,40 @@ describe('postCard', () => {
     expect(img.attributes('src')).toBe('/images/blog/cover.png')
     expect(img.attributes('alt')).toBe('Halo Dunia')
   })
+
+  it('shows the total size only when every resource declares bytes', async () => {
+    const wrapper = await mountSuspended(PostCard, {
+      props: {
+        post: {
+          ...basePost,
+          resources: [
+            { title: 'Cheat sheet', file: '/downloads/cheat-sheet.md', bytes: 2069 },
+            { title: 'Template script', file: '/downloads/template.py', bytes: 1618 },
+          ],
+        },
+      },
+    })
+
+    // 2069 + 1618 bytes, formatted with the Indonesian decimal comma.
+    expect(wrapper.text()).toContain('2 file · 3,6 KB')
+  })
+
+  it('hides the total when an external resource omits bytes', async () => {
+    const wrapper = await mountSuspended(PostCard, {
+      props: {
+        post: {
+          ...basePost,
+          resources: [
+            { title: 'Cheat sheet', file: '/downloads/cheat-sheet.md', bytes: 2069 },
+            { title: 'Paket latihan', file: 'https://rapidgator.net/file/abc123/paket.zip' },
+          ],
+        },
+      },
+    })
+
+    // A partial total would mislabel itself as the package size.
+    expect(wrapper.text()).toContain('2 file')
+    expect(wrapper.text()).not.toContain('3,6 KB')
+    expect(wrapper.text()).not.toContain('2 KB')
+  })
 })

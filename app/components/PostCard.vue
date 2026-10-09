@@ -13,7 +13,7 @@ const props = defineProps<{
     publishedAt: Date | string
     image?: string
     body?: unknown
-    resources?: { title: string, file: string, bytes: number }[]
+    resources?: { title: string, file: string, bytes?: number }[]
   }
   /**
    * Resolved Category of the post, provided by the page that owns the
@@ -27,9 +27,18 @@ const isoDate = computed(() => new Date(props.post.publishedAt).toISOString())
 
 const resources = computed(() => props.post.resources ?? [])
 
-const totalBytes = computed(() =>
-  resources.value.reduce((sum, resource) => sum + resource.bytes, 0),
-)
+// A total is only honest when every resource declares a size; an external
+// resource may omit `bytes`, and a partial sum would mislabel itself as the
+// package size.
+const totalLabel = computed(() => {
+  const list = resources.value
+  if (!list.length)
+    return ''
+  if (list.some(resource => resource.bytes === undefined))
+    return `${list.length} file`
+  const total = list.reduce((sum, resource) => sum + (resource.bytes ?? 0), 0)
+  return `${list.length} file · ${formatBytes(total)}`
+})
 
 /**
  * Deterministic initials plus a barcode drawn from the slug hash: every
@@ -120,8 +129,8 @@ const barcode = computed(() => {
 
       <div class="mt-auto flex items-center justify-between gap-4 border-t border-border px-5 py-3.5 label-caps">
         <span class="min-w-0 truncate text-muted-foreground">
-          {{ readingMinutes(post.body) }} menit baca<template v-if="resources.length">
-            · {{ resources.length }} file · {{ formatBytes(totalBytes) }}</template>
+          {{ readingMinutes(post.body) }} menit baca<template v-if="totalLabel">
+            · {{ totalLabel }}</template>
         </span>
         <span class="inline-flex shrink-0 items-center gap-1 text-primary-deep">
           BACA

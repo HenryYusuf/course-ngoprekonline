@@ -113,4 +113,29 @@ describe('package zip (GET /downloads/[slug].zip)', () => {
 
     await expect(handler(fakeEvent('tanpa-resource'))).rejects.toMatchObject({ statusCode: 404 })
   })
+
+  it('bundles only local resources, leaving external ones out of the archive', async () => {
+    mockPost({
+      ...packagedPost,
+      resources: [
+        ...packagedPost.resources,
+        { title: 'Paket latihan', file: 'https://rapidgator.net/file/abc123/paket.zip' },
+      ],
+    })
+
+    const response = await handler(fakeEvent('paket-berresource'))
+
+    // The external resource is a redirect to a PPD host: not this repo's file
+    // to stat or gather, so it must not break or bloat the archive.
+    expect(Object.keys(unzipSync(response as Uint8Array)).sort()).toEqual(['catatan.md', 'skrip.py'])
+  })
+
+  it('404s when the post ships only external resources', async () => {
+    mockPost({
+      ...packagedPost,
+      resources: [{ title: 'Paket latihan', file: 'https://rapidgator.net/file/abc123/paket.zip' }],
+    })
+
+    await expect(handler(fakeEvent('paket-berresource'))).rejects.toMatchObject({ statusCode: 404 })
+  })
 })

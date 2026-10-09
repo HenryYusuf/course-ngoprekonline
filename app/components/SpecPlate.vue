@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from '#imports'
 
+import { isExternalFile } from '#shared/utils/resources'
+
 import { formatBytes } from '~/utils/formatBytes'
 import { formatDate } from '~/utils/formatDate'
 import { readingMinutes } from '~/utils/readingMinutes'
@@ -8,7 +10,7 @@ import { readingMinutes } from '~/utils/readingMinutes'
 interface PackageResource {
   title: string
   file: string
-  bytes: number
+  bytes?: number
 }
 
 const props = defineProps<{
@@ -23,35 +25,53 @@ const props = defineProps<{
 
 const resources = computed(() => props.resources ?? [])
 
-const totalBytes = computed(() =>
-  resources.value.reduce((sum, resource) => sum + resource.bytes, 0),
+// Origin is detected from the link's shape (ADR 0004). External rows are a
+// redirect to a PPD host, so they open in a new tab and carry no download
+// attribute (browsers ignore `download` cross-origin anyway).
+const rows = computed(() => resources.value.map(resource => ({
+  ...resource,
+  external: isExternalFile(resource.file),
+  fileName: resource.file.split('/').pop() ?? resource.file,
+})))
+
+// Only the repo's own files can be bundled; external resources stay a
+// redirect the ZIP cannot gather.
+const localRows = computed(() => rows.value.filter(row => !row.external))
+
+// A total is only honest when every row declares a size; an external resource
+// may omit `bytes`, and a partial sum would mislabel itself as the package size.
+const size = computed(() =>
+  rows.value.length === 0
+    ? '0 B'
+    : rows.value.every(row => row.bytes !== undefined)
+      ? formatBytes(rows.value.reduce((sum, row) => sum + (row.bytes ?? 0), 0))
+      : '-',
 )
 
-// A single-file "zip" adds nothing over the direct link; only offer the
-// bundle when there is genuinely more than one file to gather.
-const zipHref = computed(() =>
-  props.slug && resources.value.length >= 2 ? `/downloads/${props.slug}.zip` : undefined,
-)
-
-// The badge shows the summed source-file sizes, not the archive's final size
-// (compression makes them differ); label it as contents, not download size.
+// The ZIP gathers local files only, so its badge sums just those.
 const zipBadge = computed(() =>
-  resources.value.length >= 2
-    ? `ZIP · isi ${formatBytes(totalBytes.value)}`
+  localRows.value.length >= 2
+    ? `ZIP · isi ${formatBytes(localRows.value.reduce((sum, row) => sum + (row.bytes ?? 0), 0))}`
     : undefined,
 )
 
-const rows = computed(() => [
+// A single-file "zip" adds nothing over the direct link; only offer the
+// bundle when there is genuinely more than one local file to gather.
+const zipHref = computed(() =>
+  props.slug && localRows.value.length >= 2 ? `/downloads/${props.slug}.zip` : undefined,
+)
+
+const specs = computed(() => [
   { label: 'Kategori', value: props.categoryLabel ?? '-' },
   { label: 'Waktu baca', value: `${readingMinutes(props.body)} menit` },
   { label: 'Terbit', value: props.publishedAt ? formatDate(props.publishedAt) : '-' },
-  { label: 'File', value: `${resources.value.length} berkas` },
-  { label: 'Ukuran', value: formatBytes(totalBytes.value) },
+  { label: 'File', value: `${rows.value.length} berkas` },
+  { label: 'Ukuran', value: size.value },
 ])
 
 function fileFormat(file: string): string {
-  const ext = file.split('.').pop()
-  return ext ? ext.toUpperCase() : 'BERKAS'
+  const ext = file.split('?')[0]?.split('#')[0]?.split('.').pop()
+  return ext && ext !== file ? ext.toUpperCase() : 'BERKAS'
 }
 </script>
 
@@ -64,7 +84,7 @@ function fileFormat(file: string): string {
 
     <dl class="px-5 pb-2 pt-1">
       <div
-        v-for="(row, i) in rows"
+        v-for="(row, i) in specs"
         :key="row.label"
         class="spec-row animate-[plate-row-in_560ms_both]"
         :style="{ animationDelay: `${i * 55}ms` }"
@@ -82,11 +102,13 @@ function fileFormat(file: string): string {
       <div class="mb-1 label-caps text-plate-muted">
         Isi Unduhan
       </div>
-      <ul v-if="resources.length" class="divide-y divide-plate-muted/25">
-        <li v-for="resource in resources" :key="resource.file">
+      <ul v-if="rows.length" class="divide-y divide-plate-muted/25">
+        <li v-for="resource in rows" :key="resource.file">
           <a
             :href="resource.file"
-            :download="resource.file.split('/').pop()"
+            :download="resource.external ? undefined : resource.fileName"
+            :target="resource.external ? '_blank' : undefined"
+            :rel="resource.external ? 'noopener' : undefined"
             class="group flex items-center justify-between gap-4 py-2.5"
           >
             <span class="min-w-0">
@@ -94,10 +116,24 @@ function fileFormat(file: string): string {
                 {{ resource.title }}
               </span>
               <span class="mt-0.5 block label-caps text-plate-muted">
-                {{ fileFormat(resource.file) }} · {{ formatBytes(resource.bytes) }}
+                {{ fileFormat(resource.file) }}<template v-if="resource.bytes !== undefined"> · {{ formatBytes(resource.bytes) }}</template>
               </span>
             </span>
             <svg
+              v-if="resource.external"
+              viewBox="0 0 16 16"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+              class="shrink-0 text-primary transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            >
+              <path d="M6 10 12 4m0 0H7m5 0v5M4 12v1.5A1.5 1.5 0 0 0 5.5 15h7a1.5 1.5 0 0 0 1.5-1.5V10" />
+            </svg>
+            <svg
+              v-else
               viewBox="0 0 16 16"
               width="16"
               height="16"
@@ -109,7 +145,7 @@ function fileFormat(file: string): string {
             >
               <path d="M8 2v8m0 0 3-3m-3 3-3-3M3 12v2h10v-2" />
             </svg>
-            <span class="sr-only">Unduh</span>
+            <span class="sr-only">{{ resource.external ? 'Buka di situs lain' : 'Unduh' }}</span>
           </a>
         </li>
       </ul>

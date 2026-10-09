@@ -25,11 +25,15 @@ To make a Blog Post visible on the public site. Publishing is a content decision
 _Avoid_: Deploy, release
 
 **Resource**:
-A downloadable file attached to a Blog Post (template, cheat sheet, code, asset). Lives in the repository's public downloads area; its declared size must match the real file.
+A downloadable file attached to a Blog Post (template, cheat sheet, code, asset). Either local, living in the repository's public downloads area with a declared size that must match the real file, or external, a direct file URL on a PPD host opened by redirect in a new tab.
 _Avoid_: Attachment, asset, file package
 
+**PPD**:
+Pay Per Download: the file-hosting model used for external Resources (e.g. Rapidgator). Links may expire and cannot be bundled or re-served by the site.
+_Avoid_: file host, cloud storage, drive
+
 **Paket**:
-The site's packaging of a Blog Post: its article plus every attached Resource, presented as one downloadable unit. Shown as the Spec Plate on the article page and, when a post ships two or more Resources, a single on-demand ZIP ("Unduh semua") at `/downloads/<post-slug>.zip`.
+The site's packaging of a Blog Post: its article plus every attached Resource, presented as one downloadable unit. Shown as the Spec Plate on the article page and, when a post ships two or more local Resources, a single on-demand ZIP ("Unduh semua") at `/downloads/<post-slug>.zip` bundling only those local ones.
 _Avoid_: article package, bundle, archive
 
 **Content Management**:

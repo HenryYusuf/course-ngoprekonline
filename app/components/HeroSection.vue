@@ -10,7 +10,7 @@ const props = defineProps<{
     description: string
     publishedAt: Date | string
     body?: unknown
-    resources?: { title: string, file: string, bytes: number }[]
+    resources?: { title: string, file: string, bytes?: number }[]
   }
   categoryLabel?: string
 }>()
