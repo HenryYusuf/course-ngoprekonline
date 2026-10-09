@@ -30,6 +30,11 @@ logs
 coverage
 skills/npm-*
 
+# Tool artifacts (design session outputs, before/after screenshots)
+.pr-shots/
+.impeccable/*
+!.impeccable/config.json
+
 # skills-npm symlinks (installed by `pnpm prepare`; pinned in skills-npm-lock.json)
 .agents/skills/*
 .claude/skills/*
