@@ -3,14 +3,17 @@ import { createError, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#i
 
 import { findCategory } from '#shared/utils/categories'
 
+import PostCard from '~/components/PostCard.vue'
 import SpecPlate from '~/components/SpecPlate.vue'
 import { useCategories } from '~/composables/useCategories'
-import { usePublishedPost } from '~/composables/usePublishedPosts'
+import { usePublishedPost, usePublishedPosts } from '~/composables/usePublishedPosts'
+import { articleJsonLd } from '~/utils/articleJsonLd'
 import { formatDate } from '~/utils/formatDate'
 import { readingMinutes } from '~/utils/readingMinutes'
+import { relatedPosts } from '~/utils/relatedPosts'
 
 const route = useRoute()
-const { public: { siteUrl } } = useRuntimeConfig()
+const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
 const post = await usePublishedPost(route.path)
 
@@ -19,7 +22,10 @@ if (!post) {
 }
 
 const publishedTime = new Date(post.publishedAt).toISOString()
-const category = findCategory(await useCategories(), post.category)
+const categories = await useCategories()
+const category = findCategory(categories, post.category)
+
+const related = relatedPosts(post, await usePublishedPosts())
 
 useSeoMeta({
   title: post.title,
@@ -33,6 +39,20 @@ useSeoMeta({
 })
 useHead({
   link: [{ rel: 'canonical', href: `${siteUrl}${route.path}` }],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(articleJsonLd({
+        path: route.path,
+        title: post.title,
+        description: post.description,
+        publishedAt: post.publishedAt,
+        image: post.image,
+        categorySlug: post.category,
+        categoryLabel: category?.label,
+      }, siteUrl, siteName)),
+    },
+  ],
 })
 </script>
 
@@ -104,5 +124,19 @@ useHead({
         </ul>
       </footer>
     </article>
+
+    <section v-if="related.length > 0" class="mt-16 border-t border-border pt-10">
+      <h2 class="text-xl font-extrabold tracking-[-0.01em] sm:text-2xl">
+        Paket Terkait
+      </h2>
+      <div class="grid mt-6 gap-6 lg:grid-cols-3 sm:grid-cols-2">
+        <PostCard
+          v-for="relatedPost in related"
+          :key="relatedPost.path"
+          :post="relatedPost"
+          :category="findCategory(categories, relatedPost.category)"
+        />
+      </div>
+    </section>
   </main>
 </template>
