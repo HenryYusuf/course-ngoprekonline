@@ -74,7 +74,7 @@ export default defineConfig({
       'hover:bg-foreground hover:text-background',
     ]],
     ['spec-row', 'flex items-baseline justify-between gap-6 border-t border-plate-muted/25 py-2 first:border-t-0'],
-    ['no-scrollbar', 'scrollbar-width:none [&::-webkit-scrollbar]:hidden'],
+    ['no-scrollbar', '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden'],
   ],
   preflights: [
     {

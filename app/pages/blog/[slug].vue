@@ -28,7 +28,7 @@ useSeoMeta({
   ogDescription: post.description,
   ogType: 'article',
   ogLocale: 'id_ID',
-  ogImage: post.image ? `${siteUrl}${post.image}` : undefined,
+  ogImage: post.image ? `${siteUrl}${post.image}` : `${siteUrl}/images/og-default.png`,
   articlePublishedTime: publishedTime,
 })
 useHead({

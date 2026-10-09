@@ -1,8 +1,21 @@
 <script setup lang="ts">
+import { useHead, useRuntimeConfig, useSeoMeta } from '#imports'
+
 import SiteFooter from '~/components/SiteFooter.vue'
 import SiteHeader from '~/components/SiteHeader.vue'
+import { pageTitle } from '~/utils/pageTitle'
 
 const year = new Date().getFullYear()
+
+const { public: { siteUrl, siteName } } = useRuntimeConfig()
+
+useHead({
+  titleTemplate: title => pageTitle(title, siteName),
+})
+
+useSeoMeta({
+  ogImage: `${siteUrl}/images/og-default.png`,
+})
 </script>
 
 <template>

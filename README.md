@@ -117,10 +117,12 @@ Public blog pages are prerendered at build time; the running server stays availa
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Homepage with the 3 most recent published posts |
-| `/blog` | All published posts |
+| `/` | Homepage: featured hero, category panels, a 10-post latest slider, and the full archive paginated at 24 per page (`?page=N`) |
+| `/blog` | All published posts, paginated at 24 per page (`?page=N`) |
 | `/blog/[slug]` | Post detail with prose, images, code, and video embeds |
 | `/blog/tag/[tag]` | Tag archive |
 | `/blog/category/[category]` | Category archive (404 for unknown slugs) |
+| `/cari` | Full-text search over published posts (FTS5, keyboard-driven) |
 | `/rss.xml` | RSS feed of the 20 most recent published posts |
 | `/sitemap.xml` | Sitemap (via `@nuxtjs/sitemap`) |
+| `/robots.txt` | Robots file pointing at the sitemap (Nitro route) |

@@ -43,4 +43,36 @@ describe('postSlider', () => {
     expect(html).not.toContain('Post 3')
     expect(html).toContain('2 paket')
   })
+
+  it('exposes the scroll strip to keyboard users', async () => {
+    const wrapper = await mountSuspended(PostSlider, {
+      props: { posts: [post(1), post(2)] },
+    })
+
+    const strip = wrapper.find('[role="region"]')
+    expect(strip.attributes('tabindex')).toBe('0')
+    expect(strip.attributes('aria-label')).toBe('Keluaran Terbaru')
+  })
+
+  it('scrolls the strip from labelled prev/next buttons', async () => {
+    const wrapper = await mountSuspended(PostSlider, {
+      props: { posts: [post(1), post(2)] },
+    })
+
+    const scrollBy = vi.fn()
+    const strip = wrapper.find('[role="region"]').element as HTMLElement
+    strip.scrollBy = scrollBy
+    Object.defineProperty(strip, 'clientWidth', { value: 320 })
+
+    const prev = wrapper.find('button[aria-label="Sebelumnya"]')
+    const next = wrapper.find('button[aria-label="Berikutnya"]')
+    expect(prev.exists()).toBe(true)
+    expect(next.exists()).toBe(true)
+
+    await next.trigger('click')
+    expect(scrollBy.mock.calls[0]?.[0]?.left).toBeGreaterThan(0)
+
+    await prev.trigger('click')
+    expect(scrollBy.mock.calls[1]?.[0]?.left).toBeLessThan(0)
+  })
 })
