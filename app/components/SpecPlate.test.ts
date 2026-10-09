@@ -38,6 +38,31 @@ describe('specPlate', () => {
     expect(html).toContain('PY · 1,6 KB')
   })
 
+  it('offers a single zip of the whole package when several files ship', async () => {
+    const wrapper = await mountSuspended(SpecPlate, {
+      props: { slug: 'otomasi-excel-python', resources },
+    })
+
+    const zip = wrapper.find('a[href="/downloads/otomasi-excel-python.zip"]')
+    expect(zip.exists()).toBe(true)
+    expect(zip.attributes('download')).toBe('otomasi-excel-python.zip')
+    expect(zip.text()).toContain('Unduh semua')
+  })
+
+  it('hides the zip button when only one file ships', async () => {
+    const wrapper = await mountSuspended(SpecPlate, {
+      props: { slug: 'panduan-docker-untuk-pemula', resources: [resources[0]!] },
+    })
+
+    expect(wrapper.find('a[href$=".zip"]').exists()).toBe(false)
+  })
+
+  it('hides the zip button when the post slug is unknown', async () => {
+    const wrapper = await mountSuspended(SpecPlate, { props: { resources } })
+
+    expect(wrapper.find('a[href$=".zip"]').exists()).toBe(false)
+  })
+
   it('states the empty package honestly when no files ship', async () => {
     const wrapper = await mountSuspended(SpecPlate)
     const html = wrapper.html()

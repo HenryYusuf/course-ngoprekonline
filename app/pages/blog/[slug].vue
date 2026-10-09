@@ -15,6 +15,7 @@ import { relatedPosts } from '~/utils/relatedPosts'
 const route = useRoute()
 const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
+const slug = String(route.params.slug)
 const post = await usePublishedPost(route.path)
 
 if (!post) {
@@ -99,6 +100,7 @@ useHead({
         :published-at="post.publishedAt"
         :body="post.body"
         :resources="post.resources"
+        :slug="slug"
       />
 
       <div class="mt-10">

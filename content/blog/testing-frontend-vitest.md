@@ -3,6 +3,13 @@ title: "Testing Frontend dengan Vitest: Pola yang Saya Pakai"
 description: "Post demo untuk menguji layout blog Ngoprek Online. Topik: testing frontend dengan vitest."
 category: tutorial
 publishedAt: 2026-07-13
+resources:
+  - title: "Checklist review pull request frontend"
+    file: /downloads/checklist-review-pr-frontend.md
+    bytes: 1227
+  - title: Contoh file test Vitest (.ts)
+    file: /downloads/contoh-test-vitest.ts
+    bytes: 1321
 tags:
   - testing
   - vitest
