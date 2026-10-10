@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { definePageMeta, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#imports'
+import { createError, definePageMeta, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#imports'
 
 import PostCard from '~/components/PostCard.vue'
 import { usePublishedPosts } from '~/composables/usePublishedPosts'
@@ -13,6 +13,12 @@ const { public: { siteUrl, siteName } } = useRuntimeConfig()
 
 const tag = String(route.params.tag)
 const posts = (await usePublishedPosts()).filter(post => post.tags?.includes(tag))
+
+if (posts.length === 0) {
+  // Published posts are the source of truth for tags: junk URLs get a 404,
+  // not an empty archive a search engine could index (same as categories).
+  throw createError({ statusCode: 404, statusMessage: 'Tag tidak ditemukan', fatal: true })
+}
 
 useSeoMeta({
   title: `Tag: ${tag}`,
@@ -40,9 +46,5 @@ useHead({
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
       <PostCard v-for="post in posts" :key="post.path" :post="post" />
     </div>
-
-    <p v-if="posts.length === 0" class="label-caps text-muted-foreground">
-      Belum ada paket dengan tag ini
-    </p>
   </main>
 </template>

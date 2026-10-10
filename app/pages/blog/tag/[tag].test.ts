@@ -30,4 +30,10 @@ describe('tag archive page', () => {
     expect(html).toContain('Post A')
     expect(html).not.toContain('Post B')
   })
+
+  it('404s for a tag no published post carries', async () => {
+    // The guard must throw: without it mountSuspended resolves and renders
+    // an empty 200 archive (the bug). Same assertion shape as the category page.
+    await expect(mountSuspended(TagPage, { route: '/blog/tag/tidak-ada' })).rejects.toThrow()
+  })
 })
