@@ -71,6 +71,8 @@ jobs:
           assert /cari 200
           assert /rss.xml 200 "<rss"
           assert /sitemap.xml 200 "<urlset"
+          assert /sitemap.xml 200 "https://course.ngoprekonline.com/?page="
+          assert "/?page=2" 200
           assert /robots.txt 200 "Sitemap"
           assert /blog/tidak-ada-sama-sekali 404
 

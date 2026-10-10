@@ -2,12 +2,12 @@
 import { computed, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#imports'
 
 import { findCategory } from '#shared/utils/categories'
+import { ARCHIVE_PER_PAGE, paginate } from '#shared/utils/pagination'
 
 import PaginationNav from '~/components/PaginationNav.vue'
 import PostCard from '~/components/PostCard.vue'
 import { useCategories } from '~/composables/useCategories'
 import { usePublishedPosts } from '~/composables/usePublishedPosts'
-import { ARCHIVE_PER_PAGE, paginate } from '~/utils/pagination'
 
 const { public: { siteUrl, siteName } } = useRuntimeConfig()
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from '#imports'
 
-import { pageWindow } from '~/utils/pagination'
+import { pageWindow } from '#shared/utils/pagination'
 
 const props = defineProps<{
   /** 1-based current page (already clamped by paginate()). */

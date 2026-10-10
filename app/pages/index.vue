@@ -2,6 +2,7 @@
 import { computed, useHead, useRoute, useRuntimeConfig, useSeoMeta } from '#imports'
 
 import { findCategory } from '#shared/utils/categories'
+import { ARCHIVE_PER_PAGE, paginate } from '#shared/utils/pagination'
 
 import CategoryPanels from '~/components/CategoryPanels.vue'
 import HeroSection from '~/components/HeroSection.vue'
@@ -10,7 +11,6 @@ import PostCard from '~/components/PostCard.vue'
 import PostSlider from '~/components/PostSlider.vue'
 import { useCategories } from '~/composables/useCategories'
 import { usePublishedPosts } from '~/composables/usePublishedPosts'
-import { ARCHIVE_PER_PAGE, paginate } from '~/utils/pagination'
 
 const { public: { siteUrl, siteName, siteDescription } } = useRuntimeConfig()
 
